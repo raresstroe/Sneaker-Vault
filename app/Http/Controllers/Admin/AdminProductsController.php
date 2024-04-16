@@ -176,13 +176,32 @@ class AdminProductsController extends Controller
                 'is_bestseller' => 'boolean',
                 'is_active' => 'boolean',
             ]);
+            $temporaryImages = TemporaryFile::all();
+            if ($validator->fails()) {
+                foreach ($temporaryImages as $tmp_image) {
+                    Storage::deleteDirectory('public/products/tmp/' . $tmp_image->folder);
+                    $tmp_image->delete();
+                }
+                return redirect()->route('products.index')->withErrors($validator->errors());
+            }
 
             if ($request->hasFile('img_src')) {
                 $validator->addRules(['img_src' => 'image_extension|max:10000']);
             } else {
+                // Log::info('No img_src file detected');
                 $validator->addRules(['img_src' => 'nullable']);
             }
             $validatedData = $validator->validate();
+
+            foreach ($temporaryImages as $tmp_image) {
+                Storage::copy('public/products/tmp/' . $tmp_image->folder . '/' . $tmp_image->file, 'public/images/products/' . $product->id . '/' . $tmp_image->file);
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'image_path' => 'images/products/' . $product->id . '/' . $tmp_image->file,
+                ]);
+                Storage::deleteDirectory('public/products/tmp/' . $tmp_image->folder);
+                $tmp_image->delete();
+            }
 
             if ($request->hasFile('img_src')) {
                 if (Storage::disk('public')->exists($product->img_src)) {
@@ -286,6 +305,7 @@ class AdminProductsController extends Controller
         // Log::info('Product images: ' . print_r($images, true));
         return response()->json(['product' => $product, 'images' => $images]);
     }
+
     public function remove($id, $name)
     {
         $img = ProductImage::where('product_id', $id)->where('image_path', 'images/products/' . $id . '/' . $name)->first();

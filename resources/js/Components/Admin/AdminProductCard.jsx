@@ -12,7 +12,6 @@ export default function AdminProductCard(props) {
     const handleModal = () => {
         setIsEditModalOpen(!isEditModalOpen);
     };
-
     const handleDelete = () => {
         Inertia.delete(`products/${props.id}`);
         setShowModal(false);
@@ -20,7 +19,7 @@ export default function AdminProductCard(props) {
     const productToEdit = props.products.find(
         (product) => product.id === props.id
     );
-    
+
     return (
         <>
             <Card style={{ width: "18rem" }} className="admin-card-container">

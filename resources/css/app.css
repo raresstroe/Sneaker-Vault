@@ -405,7 +405,7 @@ h6 {
 .sort-by {
     white-space: nowrap;
     padding-right: 10%;
-    padding-left: 100%;
+    padding-left: 60%;
     margin-bottom: 0px;
 }
 
@@ -423,7 +423,7 @@ h6 {
     margin-left: 7%;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 1s ease-in-out;
+    transition: max-height 0.5s ease-in-out;
 }
 .toggle-content-item {
     border-top: 1px solid #000;

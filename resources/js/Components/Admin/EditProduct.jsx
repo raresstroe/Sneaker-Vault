@@ -25,32 +25,58 @@ const EditProduct = ({ product, brands, categories }) => {
         useState(false);
 
     const [images, setImages] = useState([]);
-    const handleDelete = (index) => {
-        const productId = product ? product.id : null;
-        const fileName = images[index].options.file.name;
-        fetch(`/remove/${productId}/${fileName}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": document.head.querySelector(
-                    'meta[name="csrf-token"]'
-                ).content,
-            },
-        })
-            .then((response) => {
+
+    useEffect(() => {
+        const fetchProductImages = async () => {
+            try {
+                const productId = product ? product.id : null;
+                if (!productId) {
+                    return;
+                }
+
+                const response = await fetch(`/load/${productId}`);
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
                 }
-                const newImages = [...images];
-                newImages.splice(index, 1);
-                setImages(newImages);
-            })
-            .catch((error) => {
-                console.error(
-                    "There has been a problem with your fetch operation:",
-                    error
-                );
+                const imageData = await response.json();
+                setImages(Object.values(imageData.images));
+            } catch (error) {
+                console.error("Error fetching product images:", error);
+            }
+        };
+
+        fetchProductImages();
+    }, [product]);
+
+    const handleDelete = async (index) => {
+        try {
+            const productId = product ? product.id : null;
+            const fileName = images[index].image_path.split("/").pop();
+
+            // console.log(fileName);
+            const response = await fetch(`/remove/${productId}/${fileName}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": document.head.querySelector(
+                        'meta[name="csrf-token"]'
+                    ).content,
+                },
             });
+
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+
+            const newImages = [...images];
+            newImages.splice(index, 1);
+            setImages(newImages);
+        } catch (error) {
+            console.error(
+                "There has been a problem with your fetch operation:",
+                error
+            );
+        }
     };
 
     const handleSubmit = (e) => {
@@ -61,7 +87,6 @@ const EditProduct = ({ product, brands, categories }) => {
             post("/admin/products", data);
         }
     };
-
     return (
         <form onSubmit={handleSubmit}>
             <div className="admin-title-brand-container">
@@ -238,7 +263,11 @@ const EditProduct = ({ product, brands, categories }) => {
             <div className="admin-dropzone-image">
                 {images.map((image, index) => (
                     <div key={index}>
-                        <img src={image.source.url} alt="product" />
+                        <img
+                            src={`/storage/${image.image_path}`}
+                            alt="product"
+                        />
+
                         <span
                             onClick={() => handleDelete(index)}
                             className="btn btn-danger"

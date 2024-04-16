@@ -97,3 +97,5 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
 Route::post('/upload', [AdminProductsController::class, 'upload']);
 Route::delete('/delete', [AdminProductsController::class, 'delete']);
 Route::get('/restore', [AdminProductsController::class, 'restore']);
+Route::get('/load/{id}', [AdminProductsController::class, 'load']);
+Route::delete('/remove/{productId}/{fileName}', [AdminProductsController::class, 'remove']);

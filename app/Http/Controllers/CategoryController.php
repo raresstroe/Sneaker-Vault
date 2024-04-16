@@ -17,24 +17,31 @@ class CategoryController extends Controller
         switch ($category) {
             case 'men':
                 $products = Product::where('category', 1);
+                $categoryName = 'Barbati';
                 break;
             case 'woman':
                 $products = Product::where('category', 2);
+                $categoryName = 'Femei';
                 break;
             case 'kids':
                 $products = Product::where('category', 3);
+                $categoryName = 'Copii';
                 break;
             case 'mystery':
                 $products = Product::where('category', 4);
+                $categoryName = 'Mystery Vaults';
                 break;
             case 'football':
                 $products = Product::where('category', 5);
+                $categoryName = 'Fotbal';
                 break;
             case 'running':
                 $products = Product::where('category', 6);
+                $categoryName = 'Alergare';
                 break;
             case 'basketball':
                 $products = Product::where('category', 7);
+                $categoryName = 'Basketball';
                 break;
             default:
                 abort(404);
@@ -93,10 +100,10 @@ class CategoryController extends Controller
             });
         }
         // Log::info($products->toSql());
-        $products = $products->paginate(10);
+        $products = $products->paginate(25);
 
         return Inertia::render('Categories', [
-            'title' => ucfirst($category),
+            'title' => 'Incaltaminte ' . $categoryName,
             'category' => $category,
             'array' => $products->map(function ($product) {
                 return [
