@@ -273,6 +273,7 @@ const Categories = ({ title, category, array, brands }) => {
                             title={card.title}
                             label={card.label}
                             price={card.price}
+                            href={card.href}
                         />
                     ))}
                 </div>

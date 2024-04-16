@@ -9,57 +9,10 @@ import { Link } from "@inertiajs/react";
 import { usePage } from "@inertiajs/react";
 import { useAuth } from "@/Components/includes/useAuth";
 
-const cardsDataSale = [
-    {
-        index: 1,
-        imgSrc: "https://sneakerindustry.ro/112881-product_zoomed/superstar-millencon-w.jpg",
-        title: "Adidas Superstar",
-        label: "Reducere",
-        price: "Pret: 100 RON",
-    },
-    {
-        index: 2,
-        imgSrc: "https://sneakerindustry.ro/112881-product_zoomed/superstar-millencon-w.jpg",
-        title: "Adidas Superstar",
-        label: "Reducere",
-        price: "Pret: 200 RON",
-    },
-    {
-        index: 3,
-        imgSrc: "https://sneakerindustry.ro/112881-product_zoomed/superstar-millencon-w.jpg",
-        title: "Adidas Superstar",
-        label: "Reducere",
-        price: "Pret: 300 RON",
-    },
-];
-const cardsData = [
-    {
-        index: 1,
-        imgSrc: "../images/shoe1.png",
-        title: "Adidas Superstar",
-        label: "Nou",
-        price: "Pret: 300 RON",
-    },
-    {
-        index: 2,
-        imgSrc: "../images/shoe1.png",
-        title: "Nike Air Force 1",
-        label: "Reducere",
-        price: "Pret: 600 RON",
-    },
-    {
-        index: 3,
-        imgSrc: "../images/shoe1.png",
-        title: "NIKE AIR PRESTO MID UTILITY",
-        label: "Nou",
-        price: "Pret: 800 RON",
-    },
-];
-
-export default function Home({ banners, mystery, brands }) {
+export default function Home({ banners, mystery, brands, bestseller, sales }) {
     const { auth } = usePage().props;
     const { loggedIn, name, profile, admin } = useAuth(auth);
-    // console.log(brands);
+    // console.log(bestseller);
     return (
         <div>
             <Header
@@ -79,6 +32,7 @@ export default function Home({ banners, mystery, brands }) {
                         title={card.title}
                         label={card.label}
                         price={card.price + " RON"}
+                        href={card.href}
                     />
                 ))}
             </ProductSlider>
@@ -100,14 +54,15 @@ export default function Home({ banners, mystery, brands }) {
             </div>
             <h1 className="trending">Tendinte</h1>
             <ProductSlider>
-                {cardsData.map((card, index) => (
+                {bestseller.map((card, index) => (
                     <Card
                         key={index}
                         className="card"
-                        imgSrc={card.imgSrc}
+                        imgSrc={"/storage/" + card.img_src}
                         title={card.title}
                         label={card.label}
                         price={card.price}
+                        href={card.href}
                     />
                 ))}
             </ProductSlider>
@@ -126,16 +81,17 @@ export default function Home({ banners, mystery, brands }) {
                     <span className="button-categories">Basket</span>
                 </Link>
             </div>
-            <h1 className="sales">Cele mai vandute produse</h1>
+            <h1 className="sales">Reduceri</h1>
             <ProductSlider>
-                {cardsDataSale.map((card, index) => (
+                {sales.map((card, index) => (
                     <Card
                         key={index}
                         className="card"
-                        imgSrc={card.imgSrc}
+                        imgSrc={"/storage/" + card.img_src}
                         title={card.title}
                         label={card.label}
                         price={card.price}
+                        href={card.href}
                     />
                 ))}
             </ProductSlider>

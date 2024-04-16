@@ -621,7 +621,7 @@ ul.content-text {
     background-color: red;
     color: white;
     font-weight: bold;
-    width: 50px;
+    width: fit-content;
 }
 
 .product-content-container {

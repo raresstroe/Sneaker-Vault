@@ -115,7 +115,7 @@ class AdminProductsController extends Controller
             }
 
             $validatedData['link_name'] = $linkName;
-            $validatedData['href'] = "/products/product/{$linkName}";
+            $validatedData['href'] = "/products/{$linkName}";
 
             $product = Product::create($validatedData);
 
@@ -219,7 +219,7 @@ class AdminProductsController extends Controller
             $linkName = strtolower(str_replace(' ', '-', $validatedData['title'])) . '-' . $product->id;
             $validatedData['link_name'] = $linkName;
 
-            $validatedData['href'] = "/products/product/{$linkName}";
+            $validatedData['href'] = "/products/{$linkName}";
 
             $product->update($validatedData);
             $filter = $request->session()->get('filter');

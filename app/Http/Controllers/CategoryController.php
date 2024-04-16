@@ -112,6 +112,7 @@ class CategoryController extends Controller
                     'title' => $product->title,
                     'label' => $product->label,
                     'price' => "Pret: {$product->price} RON",
+                    'href' => $product->href,
                 ];
             }),
             'brands' => $brands,

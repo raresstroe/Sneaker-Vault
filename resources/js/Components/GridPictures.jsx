@@ -22,7 +22,7 @@ export default function GridPictures({ pictures_array }) {
             {pictures.map((pic, index) => (
                 <img
                     key={index}
-                    src={pic}
+                    src={"/storage/" + pic}
                     alt="product"
                     onClick={() => handlePick(index)}
                     className={`product-picture product-picture${index + 1} ${

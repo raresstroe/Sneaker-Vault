@@ -18,6 +18,8 @@ class HomeController extends Controller
         $banners = Banner::all()->where('is_active', 1);
         $mystery = Product::where('category', 4)->where('is_active', 1)->get();
         $brands = Brand::all();
+        $bestseller = Product::where('is_active', 1)->where('is_bestseller', 1)->get();
+        $sales = Product::where('is_active', 1)->where('is_sale', 1)->get();
 
         // Log::info($mystery);
 
@@ -28,7 +30,9 @@ class HomeController extends Controller
             'phpVersion' => PHP_VERSION,
             'banners' => $banners,
             'mystery' => $mystery,
-            'brands' => $brands
+            'brands' => $brands,
+            'bestseller' => $bestseller,
+            'sales' => $sales,
         ]);
     }
 }

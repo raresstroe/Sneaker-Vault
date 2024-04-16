@@ -3,10 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "@inertiajs/react";
 
-const Card = ({ imgSrc, title, label, price }) => {
+const Card = ({ imgSrc, title, label, price, href }) => {
     return (
         <div className="cards-link">
-            <Link href="#">
+            <Link href={href}>
                 <img src={imgSrc} className="cards" alt={title} />
             </Link>
             <div className="button-cards-container">
