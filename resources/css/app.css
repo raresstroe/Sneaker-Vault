@@ -298,7 +298,7 @@ h6 {
 
 .label-cards {
     position: absolute;
-    bottom: 60px;
+    bottom: 10px;
     left: 10px;
     background-color: #fff;
     color: #000;
@@ -336,11 +336,16 @@ h6 {
 
 .details {
     text-align: center;
+    margin-left: 10px;
 }
 
 .shoe-name {
     margin-top: 5px;
     font-weight: bold;
+    color: #333;
+    text-align: left;
+}
+.shoe-category {
     color: #333;
     text-align: left;
 }
@@ -509,6 +514,11 @@ ul.content-text {
     cursor: pointer;
 }
 
+.product-picture {
+    width: 100% !important;
+    height: 100%;
+}
+
 .product-picture.picked {
     grid-column: 1 / span 3;
     grid-row: 1 / span 3;
@@ -520,6 +530,10 @@ ul.content-text {
     gap: 1%;
     width: 23%;
     border: 1px solid #000;
+}
+
+.product-category {
+    margin-left: 5%;
 }
 
 #product-size {

@@ -52,6 +52,7 @@ class ProductsController extends Controller
                     'price' => $product_data->price,
                     'long_description' => $product_data->long_description,
                     'brand_text' => $brand_text,
+                    'category' => $product_data->category,
                 ],
             ],
         ];

@@ -16,6 +16,7 @@ export default function Product({ similiar_products }) {
     const { auth } = usePage().props;
     const { loggedIn, name, profile, admin } = useAuth(auth);
 
+    const category = array[0].category;
     let sizes = [];
     if (array[0].size !== null) {
         sizes = array[0].size.split(",");
@@ -41,7 +42,7 @@ export default function Product({ similiar_products }) {
                     <h3 className="product-name">{array[0].title}</h3>
                     <div className="price-logo-container">
                         <h2 className="product-price">
-                            {array[0].price} <span> cu TVA</span>
+                            {array[0].price} RON <span> cu TVA</span>
                         </h2>
                         {array[0].brand && (
                             <img src={array[0].brand} alt="brand-logo" />
@@ -63,6 +64,7 @@ export default function Product({ similiar_products }) {
                             ))}
                         </select>
                     )}
+                    <p className="product-category">Categorie: {category}</p>
                     {array[0].short_description && (
                         <div className="product-description-container">
                             <p
@@ -98,8 +100,9 @@ export default function Product({ similiar_products }) {
                         imgSrc={"/storage/" + card.img_src}
                         title={card.title}
                         label={card.label}
-                        price={card.price}
+                        price={card.price + " RON"}
                         href={card.href}
+                        category={category}
                     />
                 ))}
             </ProductSlider>

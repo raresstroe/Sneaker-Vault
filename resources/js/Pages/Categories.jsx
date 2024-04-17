@@ -272,7 +272,7 @@ const Categories = ({ title, category, array, brands }) => {
                             imgSrc={`/storage/${card.imgSrc}`}
                             title={card.title}
                             label={card.label}
-                            price={card.price}
+                            price={card.price + " RON"}
                             href={card.href}
                         />
                     ))}

@@ -33,6 +33,7 @@ export default function Home({ banners, mystery, brands, bestseller, sales }) {
                         label={card.label}
                         price={card.price + " RON"}
                         href={card.href}
+                        category={card.category}
                     />
                 ))}
             </ProductSlider>
@@ -61,8 +62,9 @@ export default function Home({ banners, mystery, brands, bestseller, sales }) {
                         imgSrc={"/storage/" + card.img_src}
                         title={card.title}
                         label={card.label}
-                        price={card.price}
+                        price={card.price + " RON"}
                         href={card.href}
+                        category={card.category}
                     />
                 ))}
             </ProductSlider>
@@ -90,8 +92,9 @@ export default function Home({ banners, mystery, brands, bestseller, sales }) {
                         imgSrc={"/storage/" + card.img_src}
                         title={card.title}
                         label={card.label}
-                        price={card.price}
+                        price={card.price + " RON"}
                         href={card.href}
+                        category={card.category}
                     />
                 ))}
             </ProductSlider>
