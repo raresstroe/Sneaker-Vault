@@ -10,9 +10,9 @@ import Footer from "@/Components/Footer";
 import { useState } from "react";
 import GridPictures from "@/Components/GridPictures";
 import { useAuth } from "@/Components/includes/useAuth";
+import { Inertia } from "@inertiajs/inertia";
 
-export default function Product({ similiar_products }) {
-    const { array } = usePage().props;
+export default function Product({ array, similiar_products }) {
     const { auth } = usePage().props;
     const { loggedIn, name, profile, admin } = useAuth(auth);
 
@@ -27,6 +27,24 @@ export default function Product({ similiar_products }) {
     const handleClick = (index) => {
         setActiveItem(index);
     };
+
+    const [quantity, setQuantity] = useState(1);
+
+    const addToCart = () => {
+        const selectedSize = document.getElementById("product-size").value;
+        if (selectedSize === "1") {
+            alert("Alege o marime");
+            return;
+        }
+
+        Inertia.post("/cart/add", {
+            product_id: array[0].id,
+            quantity: quantity,
+            size: selectedSize,
+            price: array[0].price,
+        });
+    };
+
     return (
         <div>
             <Header
@@ -79,7 +97,11 @@ export default function Product({ similiar_products }) {
                         <Link className="size-table">Tabel de masuri</Link>
                     )}
                     <div className="add-to-cart-container">
-                        <Button variant="dark" className="add-to-cart">
+                        <Button
+                            variant="dark"
+                            className="add-to-cart"
+                            onClick={addToCart}
+                        >
                             Adauga in cos
                         </Button>
                         <button className="btn btn-dark product-heart-button">

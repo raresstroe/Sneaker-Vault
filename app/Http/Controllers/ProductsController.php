@@ -28,7 +28,6 @@ class ProductsController extends Controller
         $brand = null;
         $brand_text = null;
 
-        // Check if the product has a brand associated with it
         if ($product_data->brand) {
             $brand = Brand::where('id', $product_data->brand)->first();
             $brand_text = $brand->description ?? null;
@@ -37,7 +36,7 @@ class ProductsController extends Controller
         $data = [
             'array' => [
                 [
-                    'index' => $product_id,
+                    'id' => $product_id,
                     'pics' => array_merge(
                         [$product_data->id => $product_data->img_src],
                         $images->mapWithKeys(function ($image) {

@@ -57,7 +57,13 @@ Route::get('/categories/{category}', [CategoryController::class, 'index']);
 Route::get('/products/{product}', [ProductsController::class, 'index']);
 
 //Cart
-Route::get('/cart', [CartController::class, 'index'])->middleware(['auth'])->name('cart');
+Route::prefix('cart')->middleware(['auth'])->group(function () {
+    Route::get('/', [CartController::class, 'index'])->name('cart');
+    Route::post('/add', [CartController::class, 'addToCart'])->name('cart.add');
+    Route::delete('/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+    Route::put('/update/{id}', [CartController::class, 'update'])->name('cart.update');
+});
+
 
 //Checkout
 Route::get('/cart/checkout', [CheckoutController::class, 'index'])->middleware(['auth'])->name('checkout');

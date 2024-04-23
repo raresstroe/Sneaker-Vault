@@ -1,8 +1,23 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+import { Inertia } from "@inertiajs/inertia";
 
 export default function ItemCart(props) {
-    const [quantity, setQuantity] = useState(1);
+    const [quantity, setQuantity] = useState(props.quantity);
+
+    const remove = () => {
+        Inertia.delete(`/cart/remove/${props.id}`);
+    };
+    const updateQuantity = (newQuantity) => {
+        newQuantity = Math.max(newQuantity, 1);
+
+        Inertia.put(`/cart/update/${props.id}`, { quantity: newQuantity })
+            .then(() => {
+                setQuantity(newQuantity);
+            })
+            .catch((error) => {
+                console.error("Error updating quantity:", error);
+            });
+    };
 
     return (
         <div>
@@ -12,7 +27,10 @@ export default function ItemCart(props) {
                     <p className="cart-item-name">{props.name}</p>
                     <p>{props.avalibility}</p>
                     <p className="cart-item-size">Mărime: {props.size}</p>
-                    <button className="btn btn-danger product-heart-button cart-delete-product">
+                    <button
+                        className="btn btn-danger product-heart-button cart-delete-product"
+                        onClick={remove}
+                    >
                         Sterge Produs
                     </button>
                 </div>
@@ -22,9 +40,7 @@ export default function ItemCart(props) {
                         <button
                             className="cart-item-quantity-button"
                             onClick={() =>
-                                setQuantity((prevQuantity) =>
-                                    Math.max(prevQuantity - 1, 1)
-                                )
+                                updateQuantity(Math.max(quantity - 1, 1))
                             }
                         >
                             -
@@ -32,9 +48,7 @@ export default function ItemCart(props) {
                         <p className="cart-quantity-value">{quantity}</p>
                         <button
                             className="cart-item-quantity-button"
-                            onClick={() =>
-                                setQuantity((prevQuantity) => prevQuantity + 1)
-                            }
+                            onClick={() => updateQuantity(quantity + 1)}
                         >
                             +
                         </button>
