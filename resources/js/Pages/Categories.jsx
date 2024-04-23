@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../Components/Header";
-import Card from "../Components/Card";
+import CardCategories from "../Components/CardCategories";
 import Footer from "../Components/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSliders } from "@fortawesome/free-solid-svg-icons";
@@ -266,13 +266,13 @@ const Categories = ({ title, category, array, brands }) => {
             <div className="categories-div">
                 <div className="categories-container">
                     {array.map((card, index) => (
-                        <Card
+                        <CardCategories
                             key={index}
                             className="card"
                             imgSrc={`/storage/${card.imgSrc}`}
                             title={card.title}
                             label={card.label}
-                            price={card.price + " RON"}
+                            price={card.price}
                             href={card.href}
                         />
                     ))}
