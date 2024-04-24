@@ -2,14 +2,13 @@ import OrderComponent from "@/Components/OrderComponent";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 
-export default function Dashboard({ auth, delivered_products }) {
-    // if (delivered_products == null) {
-    //     delivered_products.forEach((product) => {
-    //         console.log(product);
-    //     });
-    // } else {
-    //     console.log("No products");
-    // }
+export default function Dashboard({ auth, orders, orderItems }) {
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const options = { year: "numeric", month: "long", day: "numeric" };
+        return date.toLocaleDateString("ro-RO", options);
+    };
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -21,26 +20,60 @@ export default function Dashboard({ auth, delivered_products }) {
         >
             <Head title="Comenzi" />
 
-            <div
-                className={
-                    delivered_products && delivered_products.length > 0
-                        ? "py-6"
-                        : "py-12"
-                }
-            >
+            <div className={orderItems.length > 0 ? "py-6" : "py-12"}>
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
-                            {delivered_products && delivered_products.length > 0
-                                ? delivered_products.map((product) => (
-                                      <OrderComponent
-                                          key={product.id}
-                                          product={product}
-                                      />
-                                  ))
-                                : "Deocamdata nu aveti nicio comanda."}
+                    {orders.length === 0 && (
+                        <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg my-4">
+                            <div className="p-6 text-gray-900">
+                                Deocamdata nu aveti nicio comanda.
+                            </div>
                         </div>
-                    </div>
+                    )}
+                    {orders.map((order) => (
+                        <div
+                            key={order.id}
+                            className="bg-white overflow-hidden shadow-sm sm:rounded-lg my-4"
+                        >
+                            <div className="p-6 text-gray-900">
+                                {orderItems[order.id].map((item) => (
+                                    <OrderComponent
+                                        key={item.id}
+                                        name={item.product.name}
+                                        image={
+                                            "/storage/" + item.product.img_src
+                                        }
+                                        size={item.size}
+                                        quantity={item.quantity}
+                                        price={item.product.price}
+                                    />
+                                ))}
+                            </div>
+
+                            <div className="p-6 text-gray-900 flex justify-between">
+                                <div>
+                                    <h4 className="text-2xl font-semibold">
+                                        Data: {formatDate(order.created_at)}
+                                    </h4>
+                                    <h4 className="text-2xl font-semibold">
+                                        Numar de referinta: #{order.id}
+                                    </h4>
+                                </div>
+                                <div>
+                                    <h4 className="text-2xl font-semibold">
+                                        Total: {order.total_price} RON
+                                    </h4>
+                                    <h4 className="text-2xl font-semibold">
+                                        Status:{" "}
+                                        {order.order_status === "pending"
+                                            ? "In asteptare"
+                                            : order.order_status === "shipped"
+                                            ? "In curs de livrare"
+                                            : "Livrat"}
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
         </AuthenticatedLayout>

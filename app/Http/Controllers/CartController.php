@@ -40,7 +40,7 @@ class CartController extends Controller
     }
 
 
-    public function addToCart(Request $request)
+    public function add(Request $request)
     {
         try {
             $request->validate([

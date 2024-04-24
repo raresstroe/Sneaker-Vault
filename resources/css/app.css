@@ -719,6 +719,13 @@ ul.content-text {
     flex-direction: column;
 }
 
+.cart-no-product {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
 .cart-image-container {
     display: flex;
     margin: 1%;
@@ -953,7 +960,7 @@ ul.content-text {
     font-weight: bold;
 }
 
-#postal-code {
+#postal_code {
     width: 50% !important;
 }
 
@@ -1072,6 +1079,16 @@ ul.content-text {
     border: 1px solid #000;
     border-radius: 3px;
     width: 70%;
+}
+
+.summary-payment-method-container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.summary-line {
+    margin-bottom: 0;
 }
 
 .summary-img {
@@ -1232,7 +1249,7 @@ ul.content-text {
 .orders-container {
     display: flex;
     gap: 1%;
-    /* margin: 0 0 2%; */
+    margin: 0 0 2%;
 }
 
 .orders-container img {
@@ -1538,6 +1555,7 @@ ul.content-text {
     border-radius: 5px;
     padding: 9%;
 }
+
 .banner-card-info p {
     margin: 0;
 }
@@ -1548,4 +1566,27 @@ ul.content-text {
     margin: 1% 0;
     text-wrap: nowrap;
     align-items: center;
+}
+
+/*Thank You*/
+.thank-you-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1%;
+    margin: 5%;
+}
+
+.thank-you-container img {
+    width: 400px;
+}
+.not-recieved {
+    margin-top: 2%;
+    color: grey;
+    font-size: 13px;
+}
+
+.not-recieved a {
+    color: grey;
 }

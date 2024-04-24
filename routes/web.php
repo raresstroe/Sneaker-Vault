@@ -16,6 +16,7 @@ use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\Admin\AdminProductsController;
 use App\Http\Controllers\Admin\AdminBannersController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ThankYouController;
 
 require __DIR__ . '/auth.php';
 
@@ -59,17 +60,25 @@ Route::get('/products/{product}', [ProductsController::class, 'index']);
 //Cart
 Route::prefix('cart')->middleware(['auth'])->group(function () {
     Route::get('/', [CartController::class, 'index'])->name('cart');
-    Route::post('/add', [CartController::class, 'addToCart'])->name('cart.add');
+    Route::post('/add', [CartController::class, 'add'])->name('cart.add');
     Route::delete('/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
     Route::put('/update/{id}', [CartController::class, 'update'])->name('cart.update');
 });
 
 
 //Checkout
-Route::get('/cart/checkout', [CheckoutController::class, 'index'])->middleware(['auth'])->name('checkout');
+Route::prefix('cart/checkout')->middleware(['auth'])->group(function () {
+    Route::get('/', [CheckoutController::class, 'index'])->name('checkout');
+    Route::post('/addAddress', [CheckoutController::class, 'addAddress']);
+    Route::post('/addPayment', [CheckoutController::class, 'addPayment']);
+});
 
 //Checkout Summary
-Route::get('/cart/summary', [SummaryController::class, 'index'])->middleware(['auth'])->name('summary');
+Route::prefix('cart/summary')->middleware(['auth'])->group(function () {
+    Route::get('/', [SummaryController::class, 'index'])->name('summary');
+    Route::post('/send', [SummaryController::class, 'send']);
+});
+
 
 //Favorites
 Route::get('/favorites', [FavoriteController::class, 'index'])->middleware(['auth'])->name('favorites');
@@ -79,8 +88,8 @@ Route::inertia('/links/faq', 'FAQ');
 
 Route::get('/links/{content}', [ContentController::class, 'index']);
 
-
-//Admin
+//ThankYou
+Route::get('/thank-you', [ThankYouController::class, 'index'])->middleware(['auth'])->name('thank-you');
 
 //Admin Products
 Route::prefix('admin')->middleware(['admin'])->group(function () {

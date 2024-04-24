@@ -1,4 +1,5 @@
 import React from "react";
+import { Inertia } from "@inertiajs/inertia";
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 import { useState, useEffect } from "react";
@@ -19,6 +20,11 @@ export default function Checkout(props) {
     const [cities, setCities] = useState([]);
     const { auth } = usePage().props;
     const { loggedIn, name, profile, admin } = useAuth(auth);
+    const [paymentMethod, setPaymentMethod] = useState(
+        props.order.payment_method
+    );
+
+    // console.log(props.order);
 
     const handleOpenModal = () => {
         setIsModalOpen(true);
@@ -36,6 +42,57 @@ export default function Checkout(props) {
             setCities([]);
         }
     }, [county, props.counties]);
+
+    const handleSaveAddress = () => {
+        const name = document.getElementById("name").value;
+        const phoneNumber = document.getElementById("phone_number").value;
+        const county = document.getElementById("county").value;
+        const city = document.getElementById("city").value;
+        const postalCode = document.getElementById("postal_code").value;
+        const address = document.getElementById("address").value;
+
+        Inertia.post("/cart/checkout/addAddress", {
+            name: name,
+            phone_number: phoneNumber,
+            county: county,
+            city: city,
+            postal_code: postalCode,
+            address: address,
+        });
+    };
+
+    const handleSubmit = () => {
+        const payment = document.querySelector('input[name="payment"]:checked');
+
+        if (!payment) {
+            alert("Alege o metoda de plata!");
+            return;
+        }
+
+        const paymentMethod = payment.value;
+
+        Inertia.post("/cart/checkout/addPayment", {
+            payment_method: paymentMethod,
+        });
+    };
+    let username = "";
+    let cityName = "";
+    let countyName = "";
+    let address = "";
+    let postalCode = "";
+    let phone = "";
+
+    if (props.order && props.order.shipping_address) {
+        const shippingAddress = props.order.shipping_address
+            .split(";")
+            .map((item) => item.trim());
+        username = shippingAddress[0];
+        cityName = shippingAddress[1];
+        countyName = shippingAddress[2];
+        address = shippingAddress[3];
+        postalCode = shippingAddress[4];
+        phone = shippingAddress[5];
+    }
 
     return (
         <div>
@@ -58,6 +115,24 @@ export default function Checkout(props) {
                         <p className="checkout-shipment-address-title">
                             Adaugati o adresa de livrare
                         </p>
+                        {props.order.shipping_address ? (
+                            <p>
+                                Adresa de livrare salvata este:{" "}
+                                {username +
+                                    ", " +
+                                    address +
+                                    ", " +
+                                    cityName +
+                                    ", " +
+                                    countyName +
+                                    ", " +
+                                    postalCode +
+                                    ", " +
+                                    phone}
+                            </p>
+                        ) : (
+                            ""
+                        )}
                         <button
                             className="btn btn-dark cart-button checkout-button"
                             onClick={handleOpenModal}
@@ -162,13 +237,13 @@ export default function Checkout(props) {
                                             </select>
                                         </div>
                                         <div className="form-group">
-                                            <label htmlFor="postal-code">
+                                            <label htmlFor="postal_code">
                                                 Cod Postal
                                             </label>
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                id="postal-code"
+                                                id="postal_code"
                                             />
                                         </div>
                                     </div>
@@ -193,7 +268,7 @@ export default function Checkout(props) {
                                 </button>
                                 <button
                                     className="btn btn-dark"
-                                    onClick={handleCloseModal}
+                                    onClick={handleSaveAddress}
                                 >
                                     Salveaza
                                 </button>
@@ -210,6 +285,8 @@ export default function Checkout(props) {
                             id="payment1"
                             name="payment"
                             value="card"
+                            checked={paymentMethod === "card"}
+                            onChange={() => setPaymentMethod("card")}
                         />
                         <label htmlFor="payment1" className="form-check-label">
                             Card online
@@ -232,7 +309,8 @@ export default function Checkout(props) {
                             className="form-check-input"
                             id="payment2"
                             name="payment"
-                            value="paypal"
+                            checked={paymentMethod === "paypal"}
+                            onChange={() => setPaymentMethod("paypal")}
                         />
                         <label htmlFor="payment2" className="form-check-label">
                             Paypal
@@ -251,6 +329,8 @@ export default function Checkout(props) {
                             id="payment3"
                             name="payment"
                             value="cash"
+                            checked={paymentMethod === "cash"}
+                            onChange={() => setPaymentMethod("cash")}
                         />
                         <label htmlFor="payment3" className="form-check-label">
                             Ramburs la curier
@@ -276,21 +356,30 @@ export default function Checkout(props) {
                                 <p className="checkout-summary-text">Voucher</p>
                             </div>
                             <div className="checkout-summary-left-text-right">
-                                <p>300 RON</p>
-                                <p>20 RON</p>
+                                <p>{props.total + " RON"}</p>
+                                <p>
+                                    {props.total >= 450
+                                        ? "GRATUIT"
+                                        : props.orderItems.length == 0
+                                        ? "0 RON"
+                                        : "20 RON"}
+                                </p>
                                 <p>0 RON</p>
                             </div>
                         </div>
 
                         <div className="checkout-summary-right">
                             <p className="checkout-total-text">
-                                Total: 320 RON
+                                Total:{" "}
+                                {props.orderItems.length == 0
+                                    ? "0 RON"
+                                    : props.total >= 450
+                                    ? props.total + " RON"
+                                    : props.total + 20 + " RON"}
                             </p>
                             <button
                                 className="btn btn-dark cart-button"
-                                onClick={() =>
-                                    (window.location.href = "/cart/summary")
-                                }
+                                onClick={() => handleSubmit()}
                             >
                                 Pasul urmator
                             </button>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -13,24 +15,27 @@ class OrdersController extends Controller
 {
     public function index()
     {
-        $userId = Auth::id();
+        $user = Auth::user();
 
-        $delivered_orders = Order::where('user_id', $userId)
-            ->where('order_status', 'Livrat')
-            ->with(['items.product'])
+        $orders = Order::where('user_id', $user->id)
+            ->whereIn('order_status', ['pending', 'delivered'])
             ->get();
 
-        $delivered_products = [];
-        foreach ($delivered_orders as $order) {
-            foreach ($order->items as $item) {
-                $delivered_products[] = $item->product;
-            }
+        $orderItems = [];
+        $total = 0;
+
+        foreach ($orders as $order) {
+            $items = $order->items()->with('product')->get();
+            $orderItems[$order->id] = $items;
+            $total += $items->sum(function ($item) {
+                return $item->quantity * $item->product->price;
+            });
         }
-        // Log::info($delivered_orders->toArray());
 
         return Inertia::render('Dashboard', [
-            'delivered_orders' => $delivered_orders,
-            'delivered_products' => $delivered_products
+            'orders' => $orders,
+            'orderItems' => $orderItems,
+            'total' => $total,
         ]);
     }
 }
