@@ -1590,3 +1590,10 @@ ul.content-text {
 .not-recieved a {
     color: grey;
 }
+
+/*Admin*/
+.text-dashboard-admin {
+    margin: 2% 0 0;
+    font-size: 25px;
+    font-weight: bold;
+}
