@@ -3,8 +3,14 @@ import DeleteUserForm from "./Partials/DeleteUserForm";
 import UpdatePasswordForm from "./Partials/UpdatePasswordForm";
 import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationForm";
 import { Head } from "@inertiajs/react";
+import UpdatePicture from "./Partials/UpdatePicture";
 
-export default function Edit({ auth, mustVerifyEmail, status }) {
+export default function Edit({
+    auth,
+    mustVerifyEmail,
+    status,
+    profile_picture,
+}) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -28,6 +34,12 @@ export default function Edit({ auth, mustVerifyEmail, status }) {
 
                     <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                         <UpdatePasswordForm className="max-w-xl" />
+                    </div>
+                    <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                        <UpdatePicture
+                            className="max-w-xl"
+                            profile_picture={profile_picture}
+                        />
                     </div>
 
                     <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">

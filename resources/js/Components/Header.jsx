@@ -78,11 +78,12 @@ const Header = (props) => {
                         {props.loggedIn ? (
                             <>
                                 <Nav.Item>
-                                    <Image
-                                        className="profile-pic"
-                                        src={props.profile_photo}
-                                        roundedCircle
-                                    />
+                                    <div className="profile-pic-container">
+                                        <Image
+                                            className="profile-pic"
+                                            src={props.profile_photo}
+                                        />
+                                    </div>
                                 </Nav.Item>
                                 <NavDropdown
                                     title={props.name}

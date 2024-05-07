@@ -19,6 +19,19 @@ h6 {
     color: white !important;
     user-select: none;
 }
+.profile-pic-container {
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    border-radius: 50%;
+    position: relative;
+}
+.profile-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+}
 .form-inputs {
     position: relative;
 }
@@ -1596,4 +1609,10 @@ ul.content-text {
     margin: 2% 0 0;
     font-size: 25px;
     font-weight: bold;
+}
+
+/*Profile*/
+.profile-picture-dashboard {
+    width: 17rem;
+    object-fit: cover;
 }
