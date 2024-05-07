@@ -15,6 +15,8 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\Admin\AdminProductsController;
 use App\Http\Controllers\Admin\AdminBannersController;
+use App\Http\Controllers\Admin\AdminOrdersController;
+use App\Http\Controllers\Admin\AdminUsersController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ThankYouController;
 
@@ -107,6 +109,20 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::post('/banners', [AdminBannersController::class, 'add']);
     Route::post('/banners/{banner}', [AdminBannersController::class, 'update']);
     Route::delete('/banners/{banner}', [AdminBannersController::class, 'destroy']);
+});
+
+//Admin Users
+Route::prefix('admin')->middleware(['admin'])->group(function () {
+    Route::get('/users', [AdminUsersController::class, 'index'])->name('users.index');
+    Route::put('/users/toggle-admin', [AdminUsersController::class, 'admin']);
+    Route::delete('/users/{user}', [AdminUsersController::class, 'delete'])->name('users.delete');
+});
+
+//Admin Orders
+Route::prefix('admin')->middleware(['admin'])->group(function () {
+    Route::get('/orders', [AdminOrdersController::class, 'index'])->name('orders.index');
+    Route::put('/orders/status/{order}', [AdminOrdersController::class, 'status']);
+    Route::delete('/orders/{order}', [AdminOrdersController::class, 'delete'])->name('orders.delete');
 });
 
 //Filepond Routes
