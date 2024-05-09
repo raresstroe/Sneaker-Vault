@@ -19,14 +19,28 @@ export default function ItemCart(props) {
             });
     };
 
+    const categoryMap = {
+        1: "Barbati",
+        2: "Femei",
+        3: "Copii",
+        4: "Mystery Vault",
+    };
+
+    const ItemCategory = categoryMap[props.category];
+
     return (
         <div>
             <div className="cart-image-container">
                 <img src={props.image} />
                 <div className="cart-items-left">
                     <p className="cart-item-name">{props.name}</p>
-                    <p>{props.avalibility}</p>
-                    <p className="cart-item-size">Mărime: {props.size}</p>
+                    <p>Categorie: {ItemCategory}</p>
+                    <p>{props.avalability == 1 ? "In stoc" : "Indisponibil"}</p>
+                    {props.category != 4 ? (
+                        <p className="cart-item-size">Mărime: {props.size}</p>
+                    ) : (
+                        ""
+                    )}
                     <button
                         className="btn btn-danger product-heart-button cart-delete-product"
                         onClick={remove}

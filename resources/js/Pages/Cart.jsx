@@ -12,7 +12,6 @@ export default function Cart({ orderItems, total, bestseller }) {
     const { auth } = usePage().props;
     const { loggedIn, name, profile, admin } = useAuth(auth);
     const [voucher, setVoucher] = useState("");
-
     return (
         <div>
             <Header
@@ -38,8 +37,10 @@ export default function Cart({ orderItems, total, bestseller }) {
                                 name={item.product.title}
                                 quantity={item.quantity}
                                 price={`${item.product.price} RON`}
+                                avalability={item.product.is_active}
                                 size={item.size}
                                 image={"/storage/" + item.product.img_src}
+                                category={item.product.category}
                             />
                         ))
                     )}

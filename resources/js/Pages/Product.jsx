@@ -22,6 +22,14 @@ export default function Product({
     const { loggedIn, name, profile, admin } = useAuth(auth);
 
     const category = array[0].category;
+    const categoryMap = {
+        1: "Barbati",
+        2: "Femei",
+        3: "Copii",
+        4: "Mystery Vault",
+    };
+
+    const ItemCategory = categoryMap[array[0].category];
     let sizes = [];
     if (array[0].size !== null) {
         sizes = array[0].size.split(",");
@@ -32,11 +40,16 @@ export default function Product({
     const handleClick = (index) => {
         setActiveItem(index);
     };
-
     const [quantity, setQuantity] = useState(1);
 
     const addToCart = () => {
-        const selectedSize = document.getElementById("product-size").value;
+        let selectedSize = "";
+        if (category != 4) {
+            selectedSize = document.getElementById("product-size").value;
+        }
+        if (category == 4) {
+            selectedSize = "0";
+        }
         if (selectedSize === "1") {
             alert("Alege o marime");
             return;
@@ -89,7 +102,9 @@ export default function Product({
                             ))}
                         </select>
                     )}
-                    <p className="product-category">Categorie: {category}</p>
+                    <p className="product-category">
+                        Categorie: {ItemCategory}
+                    </p>
                     {array[0].short_description && (
                         <div className="product-description-container">
                             <p
