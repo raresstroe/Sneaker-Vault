@@ -140,10 +140,12 @@ h6 {
     font-size: 12px;
     font-weight: bold;
     text-wrap: wrap;
+    text-align: justify;
 }
 
 .order-dropdown-component img {
     width: 80px;
+    height: auto;
     margin-right: 10%;
 }
 .total-dropdown {
