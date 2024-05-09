@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\AdminUsersController;
 use App\Http\Controllers\Admin\AdminVoucherController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ThankYouController;
 
 require __DIR__ . '/auth.php';
@@ -58,6 +59,10 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 //Subscribe
 Route::post('/subscribe', [HomeController::class, 'subscribe']);
+
+//Search
+Route::get('/search', [SearchController::class, 'index'])->name('search');
+
 
 //Categories
 Route::get('/categories/{category}', [CategoryController::class, 'index']);

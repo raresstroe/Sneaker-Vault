@@ -48,6 +48,18 @@ const Header = (props) => {
     const orderItems = props.orderItems;
     const [isOpen, setIsOpen] = useState(false);
 
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        if (searchTerm.trim() !== "") {
+            const encodedSearchTerm = encodeURIComponent(
+                searchTerm.trim()
+            ).replace(/%20/g, "+");
+            window.location.href = `/search?search=${encodedSearchTerm}`;
+        }
+    };
+
     return (
         <header>
             <Navbar bg="dark" variant="dark" expand="lg">
@@ -268,21 +280,24 @@ const Header = (props) => {
                 <Offcanvas show={show} onHide={handleClose}>
                     <Offcanvas.Header closeButton></Offcanvas.Header>
                     <p className="heading-header">Sneaker Vault</p>
-                    {/* <div style={{ display: "flex", justifyContent: "center" }}>
+                    <div style={{ display: "flex", justifyContent: "center" }}>
                         <Form
                             className="d-flex form-inputs"
                             style={{ width: "80%" }}
+                            onSubmit={handleSearch}
                         >
                             <FormControl
                                 type="text"
                                 placeholder="Cauta orice produs..."
                                 className="mr-sm-2"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
                             />
-                            <Button variant="">
-                                <FontAwesomeIcon icon={faMagnifyingGlass} />{" "}
+                            <Button type="submit" variant="">
+                                <FontAwesomeIcon icon={faMagnifyingGlass} />
                             </Button>
                         </Form>
-                    </div> */}
+                    </div>
                     <Offcanvas.Body>
                         <Nav className="flex-column">
                             <ToggleContent

@@ -352,11 +352,12 @@ h6 {
     border-radius: 5px;
     transition: background-color 0.3s ease;
     font-size: 16px;
+    user-select: none;
 }
 
 .label-cards-categories {
     position: absolute;
-    bottom: 60px;
+    bottom: 90px;
     left: 10px;
     background-color: #fff;
     color: #000;
@@ -364,9 +365,13 @@ h6 {
     border-radius: 5px;
     transition: background-color 0.3s ease;
     font-size: 16px;
+    user-select: none;
 }
 
 .label-cards:hover {
+    background-color: #ddd;
+}
+.label-cards-categories:hover {
     background-color: #ddd;
 }
 .cards-link {
@@ -1711,4 +1716,9 @@ ul.content-text {
 
 .voucher-card-info p {
     margin: 0;
+}
+
+.search-no-product {
+    text-align: center;
+    text-wrap: nowrap;
 }
