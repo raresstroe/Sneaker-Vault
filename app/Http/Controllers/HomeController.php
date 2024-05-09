@@ -4,17 +4,35 @@ namespace App\Http\Controllers;
 
 use App\Models\Banner;
 use App\Models\Brand;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 
 class HomeController extends Controller
 {
     public function index()
     {
+        $user = Auth::user();
+        $order = Order::where('user_id', $user->id)
+            ->where('order_status', 'open')
+            ->first();
+
+        $orderItems = [];
+        $total = 0;
+
+        if ($order) {
+            $orderItems = $order->items()->with('product')->get();
+            $total = $orderItems->sum(function ($item) {
+                return $item->quantity * $item->product->price;
+            });
+        }
+
         $banners = Banner::all()->where('is_active', 1);
         $mystery = Product::where('category', 4)->where('is_active', 1)->get();
         $brands = Brand::all();
@@ -33,6 +51,9 @@ class HomeController extends Controller
             'brands' => $brands,
             'bestseller' => $bestseller,
             'sales' => $sales,
+            'order' => $order,
+            'orderItems' => $orderItems,
+            'total' => $total,
         ]);
     }
 }

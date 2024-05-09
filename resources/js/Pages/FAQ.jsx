@@ -140,7 +140,7 @@ const other = [
         maxHeightTablet: "40px",
     },
 ];
-export default function FAQ() {
+export default function FAQ({ orderItems, total }) {
     const { auth } = usePage().props;
     const { loggedIn, name, profile, admin } = useAuth(auth);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
@@ -166,6 +166,8 @@ export default function FAQ() {
                 name={name}
                 profile_photo={profile}
                 admin={admin}
+                orderItems={orderItems}
+                total={total}
             />
             <h1 className="categories-title">FAQ</h1>
             <h3 className="faq-subtitle">Livrări și returnarea produselor</h3>

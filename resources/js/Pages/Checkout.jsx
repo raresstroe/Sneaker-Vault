@@ -101,6 +101,8 @@ export default function Checkout(props) {
                 name={name}
                 profile_photo={profile}
                 admin={admin}
+                orderItems={props.orderItems}
+                total={props.total}
             />
             <p className="checkout-title">Detalii Comanda</p>
             <div className="checkout-container">

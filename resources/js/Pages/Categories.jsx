@@ -10,7 +10,7 @@ import { usePage } from "@inertiajs/react";
 import { useAuth } from "@/Components/includes/useAuth";
 import { Inertia } from "@inertiajs/inertia";
 
-const Categories = ({ title, category, array, brands }) => {
+const Categories = ({ title, category, array, brands, orderItems, total }) => {
     const [selectedFilters, setSelectedFilters] = useState([]);
     const [selectedSort, setSelectedSort] = useState("");
     const { auth } = usePage().props;
@@ -69,6 +69,8 @@ const Categories = ({ title, category, array, brands }) => {
                 name={name}
                 profile_photo={profile}
                 admin={admin}
+                orderItems={orderItems}
+                total={total}
             />
             <h1 className="categories-title">{title}</h1>
             <div className="container-filters">

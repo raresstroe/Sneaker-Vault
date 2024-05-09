@@ -7,6 +7,8 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Order;
 
 class CategoryController extends Controller
 {
@@ -102,6 +104,21 @@ class CategoryController extends Controller
         // Log::info($products->toSql());
         $products = $products->paginate(25);
 
+        $user = Auth::user();
+        $order = Order::where('user_id', $user->id)
+            ->where('order_status', 'open')
+            ->first();
+
+        $orderItems = [];
+        $total = 0;
+
+        if ($order) {
+            $orderItems = $order->items()->with('product')->get();
+            $total = $orderItems->sum(function ($item) {
+                return $item->quantity * $item->product->price;
+            });
+        }
+
         return Inertia::render('Categories', [
             'title' => 'Incaltaminte ' . $categoryName,
             'category' => $category,
@@ -116,7 +133,10 @@ class CategoryController extends Controller
                 ];
             }),
             'brands' => $brands,
-            'filters' => $filters
+            'filters' => $filters,
+            'order' => $order,
+            'orderItems' => $orderItems,
+            'total' => $total,
         ]);
     }
 }

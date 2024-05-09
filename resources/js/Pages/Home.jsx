@@ -9,10 +9,20 @@ import { Link } from "@inertiajs/react";
 import { usePage } from "@inertiajs/react";
 import { useAuth } from "@/Components/includes/useAuth";
 
-export default function Home({ banners, mystery, brands, bestseller, sales }) {
+export default function Home({
+    banners,
+    mystery,
+    brands,
+    bestseller,
+    sales,
+    order,
+    orderItems,
+    total,
+}) {
     const { auth } = usePage().props;
     const { loggedIn, name, profile, admin } = useAuth(auth);
     // console.log(bestseller);
+    // console.log(orderItems);
     return (
         <div>
             <Header
@@ -20,6 +30,8 @@ export default function Home({ banners, mystery, brands, bestseller, sales }) {
                 name={name}
                 profile_photo={profile}
                 admin={admin}
+                orderItems={orderItems}
+                total={total}
             />
             <Slider banners={banners} />
             <h1 className="mystery">Mystery Vaults</h1>

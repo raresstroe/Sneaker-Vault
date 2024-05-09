@@ -30,6 +30,8 @@ export default function Summary({ order, orderItems, total }) {
                 name={name}
                 profile_photo={profile}
                 admin={admin}
+                orderItems={orderItems}
+                total={total}
             />
             <div className="summary-container">
                 <div className="summary-shipping-method">

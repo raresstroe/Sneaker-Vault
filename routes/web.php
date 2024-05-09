@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\AdminProductsController;
 use App\Http\Controllers\Admin\AdminBannersController;
 use App\Http\Controllers\Admin\AdminOrdersController;
 use App\Http\Controllers\Admin\AdminUsersController;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ThankYouController;
 
@@ -87,7 +88,8 @@ Route::prefix('cart/summary')->middleware(['auth'])->group(function () {
 Route::get('/favorites', [FavoriteController::class, 'index'])->middleware(['auth'])->name('favorites');
 
 //Footer Links
-Route::inertia('/links/faq', 'FAQ');
+Route::get('/links/faq', [FaqController::class, 'index']);
+
 
 Route::get('/links/{content}', [ContentController::class, 'index']);
 

@@ -8,6 +8,8 @@ use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
+use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
 
 class ProductsController extends Controller
 {
@@ -56,10 +58,28 @@ class ProductsController extends Controller
             ],
         ];
 
+        $user = Auth::user();
+        $order = Order::where('user_id', $user->id)
+            ->where('order_status', 'open')
+            ->first();
+
+        $orderItems = [];
+        $total = 0;
+
+        if ($order) {
+            $orderItems = $order->items()->with('product')->get();
+            $total = $orderItems->sum(function ($item) {
+                return $item->quantity * $item->product->price;
+            });
+        }
+
 
         return Inertia::render('Product', [
             'array' => $data['array'],
             'similiar_products' => $similiar_products,
+            'order' => $order,
+            'orderItems' => $orderItems,
+            'total' => $total,
         ]);
     }
 }

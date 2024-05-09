@@ -21,6 +21,7 @@ import { faClock } from "@fortawesome/free-solid-svg-icons";
 import { faRightLeft } from "@fortawesome/free-solid-svg-icons";
 import ResponsiveNavLink from "@/Components/Breeze/ResponsiveNavLink";
 import ToggleContent from "./ToggleContent";
+import OrderDropdown from "./OrderDropdown";
 
 const categories = [
     {
@@ -44,7 +45,7 @@ const Header = (props) => {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
+    const orderItems = props.orderItems;
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -173,14 +174,17 @@ const Header = (props) => {
                                                 icon={faShoppingCart}
                                             />
                                         </span>
-                                        {/* <div className="d-flex flex-column ms-2 text-nowrap">
-                                        <span className="qty">
-                                            Produse
-                                        </span>
-                                        <span className="fw-bold">
-                                            100 Lei
-                                        </span>
-                                    </div> */}
+                                        <div className="d-flex flex-column ms-2 text-nowrap">
+                                            <span className="qty">
+                                                {orderItems.length}{" "}
+                                                {orderItems.length == 1
+                                                    ? " Produs"
+                                                    : " Produse"}
+                                            </span>
+                                            <span className="fw-bold">
+                                                {props.total} RON
+                                            </span>
+                                        </div>
                                     </div>
                                 }
                                 id="nav-dropdown"
@@ -189,9 +193,55 @@ const Header = (props) => {
                                 onMouseEnter={() => setIsOpen(true)}
                                 onMouseLeave={() => setIsOpen(false)}
                             >
-                                <NavDropdown.Item eventKey="1">
-                                    Nu ai produse in cos.
-                                </NavDropdown.Item>
+                                {orderItems.length == 0 ? (
+                                    <NavDropdown.Item eventKey="1">
+                                        Nu ai produse in cos.
+                                    </NavDropdown.Item>
+                                ) : (
+                                    ""
+                                )}
+
+                                {orderItems.length !== 0
+                                    ? orderItems.map((item, index) => (
+                                          <NavDropdown.Item
+                                              eventKey={index}
+                                              href={item.product.href}
+                                          >
+                                              <OrderDropdown
+                                                  key={index}
+                                                  imgSrc={
+                                                      "/storage/" +
+                                                      item.product.img_src
+                                                  }
+                                                  price={item.product.price}
+                                                  quantity={item.quantity}
+                                                  name={item.product.title}
+                                              />
+                                          </NavDropdown.Item>
+                                      ))
+                                    : ""}
+                                {orderItems.length !== 0 ? (
+                                    <div>
+                                        <NavDropdown.Item className="disabled">
+                                            <hr />
+                                            <div>
+                                                <h6 className="total-dropdown">
+                                                    Total: {props.total} RON
+                                                </h6>
+                                            </div>
+                                        </NavDropdown.Item>
+                                        <NavDropdown.Item>
+                                            <a
+                                                href="/cart"
+                                                className="btn btn-dark dropdown-go-cart"
+                                            >
+                                                Mergi la cosul de cumparaturi
+                                            </a>
+                                        </NavDropdown.Item>
+                                    </div>
+                                ) : (
+                                    ""
+                                )}
                             </NavDropdown>
                         </Col>
                     </Row>

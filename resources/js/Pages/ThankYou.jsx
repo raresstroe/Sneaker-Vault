@@ -4,7 +4,7 @@ import { useAuth } from "@/Components/includes/useAuth";
 import Header from "@/Components/Header";
 import Footer from "@/Components/Footer";
 
-export default function ThankYou() {
+export default function ThankYou({ orderItems, total }) {
     const { auth } = usePage().props;
     const { loggedIn, name, profile, admin } = useAuth(auth);
     return (
@@ -14,6 +14,8 @@ export default function ThankYou() {
                 name={name}
                 profile_photo={profile}
                 admin={admin}
+                orderItems={orderItems}
+                total={total}
             />
             <div className="thank-you-container">
                 <h1>Multumim pentru comanda!</h1>

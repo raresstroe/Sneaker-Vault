@@ -20,6 +20,8 @@ export default function Cart({ orderItems, total, bestseller }) {
                 name={name}
                 profile_photo={profile}
                 admin={admin}
+                orderItems={orderItems}
+                total={total}
             />
             <p className="cart-title">Cosul Meu</p>
             <div className="cart-container">

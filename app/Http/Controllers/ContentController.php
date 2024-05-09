@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Content;
+use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
 
 class ContentController extends Controller
 {
@@ -26,9 +28,27 @@ class ContentController extends Controller
             abort(404);
         }
 
+        $user = Auth::user();
+        $order = Order::where('user_id', $user->id)
+            ->where('order_status', 'open')
+            ->first();
+
+        $orderItems = [];
+        $total = 0;
+
+        if ($order) {
+            $orderItems = $order->items()->with('product')->get();
+            $total = $orderItems->sum(function ($item) {
+                return $item->quantity * $item->product->price;
+            });
+        }
+
         return Inertia::render('Content', [
             'title' => $data[$content]['title'],
             'content' => $data[$content]['content'],
+            'order' => $order,
+            'orderItems' => $orderItems,
+            'total' => $total,
         ]);
     }
 }

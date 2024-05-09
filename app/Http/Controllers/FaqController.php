@@ -7,7 +7,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
 
-class ThankYouController extends Controller
+class FaqController extends Controller
 {
     public function index()
     {
@@ -26,7 +26,7 @@ class ThankYouController extends Controller
             });
         }
 
-        return Inertia::render('ThankYou', [
+        return Inertia::render('FAQ', [
             'order' => $order,
             'orderItems' => $orderItems,
             'total' => $total,

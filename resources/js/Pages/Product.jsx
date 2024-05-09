@@ -12,7 +12,12 @@ import GridPictures from "@/Components/GridPictures";
 import { useAuth } from "@/Components/includes/useAuth";
 import { Inertia } from "@inertiajs/inertia";
 
-export default function Product({ array, similiar_products }) {
+export default function Product({
+    array,
+    similiar_products,
+    orderItems,
+    total,
+}) {
     const { auth } = usePage().props;
     const { loggedIn, name, profile, admin } = useAuth(auth);
 
@@ -52,6 +57,8 @@ export default function Product({ array, similiar_products }) {
                 name={name}
                 profile_photo={profile}
                 admin={admin}
+                orderItems={orderItems}
+                total={total}
             />
             <div className="product-container">
                 <GridPictures pictures_array={pictures} />
