@@ -56,6 +56,9 @@ Route::middleware('auth')->group(function () {
 //Index
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+//Subscribe
+Route::post('/subscribe', [HomeController::class, 'subscribe']);
+
 //Categories
 Route::get('/categories/{category}', [CategoryController::class, 'index']);
 Route::get('/sports', [CategoryController::class, 'sports']);

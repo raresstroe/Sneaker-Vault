@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Banner;
 use App\Models\Brand;
+use App\Models\NewsletterList;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -12,7 +13,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
+use Spatie\Newsletter\Facades\Newsletter;
+// use Newsletter;
 
 class HomeController extends Controller
 {
@@ -60,5 +62,20 @@ class HomeController extends Controller
             'orderItems' => $orderItems,
             'total' => $total,
         ]);
+    }
+
+    public function subscribe(Request $request)
+    {
+        $validatedData = $request->validate([
+            'email' => 'required|email|unique:newsletter,email',
+        ]);
+        // Log::info($validatedData['email']);
+        try {
+            NewsletterList::create(['email' => $validatedData['email']]);
+            Newsletter::subscribe($validatedData['email']);
+        } catch (\Exception $e) {
+            return redirect()->back();
+        }
+        return redirect()->back();
     }
 }

@@ -18,13 +18,10 @@ export default function AdminVoucher({ vouchers }) {
         const searchTermLower = searchTerm.toLowerCase();
         const voucherIdStr = voucher.id.toString();
         const voucherCodeLower = voucher.code.toLowerCase();
-
-        return (
-            voucherIdStr.includes(searchTermLower) ||
-            voucherCodeLower.includes(searchTermLower)
-        );
+    
+        return voucherIdStr.includes(searchTermLower) || voucherCodeLower.includes(searchTermLower);
     });
-
+    
     return (
         <AdminHeader title="Voucher">
             <input

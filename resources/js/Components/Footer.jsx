@@ -4,14 +4,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faFacebookF,
     faXTwitter,
-    faGoogle,
     faInstagram,
-    faLinkedinIn,
-    faGithub,
 } from "@fortawesome/free-brands-svg-icons";
 import { Link } from "@inertiajs/react";
+import { Inertia } from "@inertiajs/inertia";
 
 const Footer = () => {
+    const handleSubscribe = (event) => {
+        event.preventDefault();
+
+        const email = document.getElementById("newsletter-email").value;
+
+        Inertia.post("/subscribe", {
+            email: email,
+        });
+        // console.log(email);
+    };
     return (
         <footer className="bg-body-tertiary text-center">
             <Container className="p-4">
@@ -58,8 +66,9 @@ const Footer = () => {
                             <Col>
                                 <Button
                                     variant="outline-dark"
-                                    type="submit"
+                                    type="button"
                                     className="btn"
+                                    onClick={handleSubscribe}
                                 >
                                     Aboneaza-te
                                 </Button>
@@ -90,14 +99,20 @@ const Footer = () => {
                             </h5>
                             <ul className="list-unstyled mb-0">
                                 <li>
-                                    <Link className="text-body" href="/dashboard">
+                                    <Link
+                                        className="text-body"
+                                        href="/dashboard"
+                                    >
                                         <p className="footer-link">
                                             Contul meu
                                         </p>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link className="text-body" href="/register">
+                                    <Link
+                                        className="text-body"
+                                        href="/register"
+                                    >
                                         <p className="footer-link">
                                             Inregistreaza-te
                                         </p>
@@ -130,7 +145,10 @@ const Footer = () => {
                             </h5>
                             <ul className="list-unstyled mb-0">
                                 <li>
-                                    <Link className="text-body" href="/links/faq">
+                                    <Link
+                                        className="text-body"
+                                        href="/links/faq"
+                                    >
                                         <p className="footer-link">FAQ</p>
                                     </Link>
                                 </li>
