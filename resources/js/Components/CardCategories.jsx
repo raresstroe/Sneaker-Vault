@@ -4,12 +4,6 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "@inertiajs/react";
 
 const CardCategories = ({ imgSrc, title, label, price, href, category }) => {
-    const categoryMap = {
-        1: "Barbati",
-        2: "Femei",
-        3: "Copii",
-        4: "Mystery Vault",
-    };
     return (
         <>
             <div className="cards-link">
@@ -24,7 +18,6 @@ const CardCategories = ({ imgSrc, title, label, price, href, category }) => {
                 </div>
                 <div className="details">
                     <div className="shoe-name">{title}</div>
-                    <div className="shoe-category">{categoryMap[category]}</div>
                     <div className="shoe-price">{price}</div>
                 </div>
             </div>

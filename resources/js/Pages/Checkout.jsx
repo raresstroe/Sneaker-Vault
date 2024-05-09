@@ -358,7 +358,7 @@ export default function Checkout(props) {
                                 <p className="checkout-summary-text">Voucher</p>
                             </div>
                             <div className="checkout-summary-left-text-right">
-                                <p>{props.total + " RON"}</p>
+                                <p>{props.order.total_price + " RON"}</p>
                                 <p>
                                     {props.total >= 450
                                         ? "GRATUIT"
