@@ -26,6 +26,7 @@ class SummaryController extends Controller
                 return $item->quantity * $item->product->price;
             });
         }
+
         return Inertia::render('Summary', [
             'orderItems' => $orderItems,
             'order' => $order,

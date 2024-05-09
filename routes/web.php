@@ -57,6 +57,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 //Categories
 Route::get('/categories/{category}', [CategoryController::class, 'index']);
+Route::get('/sports', [CategoryController::class, 'sports']);
 
 //Products
 Route::get('/products/{product}', [ProductsController::class, 'index']);
@@ -67,6 +68,7 @@ Route::prefix('cart')->middleware(['auth'])->group(function () {
     Route::post('/add', [CartController::class, 'add'])->name('cart.add');
     Route::delete('/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
     Route::put('/update/{id}', [CartController::class, 'update'])->name('cart.update');
+    Route::post('/voucher', [CartController::class, 'applyVoucher'])->name('cart.applyVoucher');
 });
 
 
@@ -85,7 +87,11 @@ Route::prefix('cart/summary')->middleware(['auth'])->group(function () {
 
 
 //Favorites
-Route::get('/favorites', [FavoriteController::class, 'index'])->middleware(['auth'])->name('favorites');
+Route::prefix('favorites')->middleware(['auth'])->group(function () {
+    Route::get('/', [FavoriteController::class, 'index'])->name('favorites');
+    Route::post('/add', [FavoriteController::class, 'add'])->name('favorites.add');
+    Route::delete('/remove/{id}', [FavoriteController::class, 'remove'])->name('favorites.remove');
+});
 
 //Footer Links
 Route::get('/links/faq', [FaqController::class, 'index']);

@@ -6,31 +6,8 @@ import Footer from "@/Components/Footer";
 import ProductSlider from "@/Components/ProductSlider";
 import Card from "@/Components/Card";
 import { useAuth } from "@/Components/includes/useAuth";
-const cardsData = [
-    {
-        index: 1,
-        imgSrc: "https://sneakerindustry.ro/112881-product_zoomed/superstar-millencon-w.jpg",
-        title: "Adidas Superstar",
-        label: "Nou",
-        price: "Pret: 300 RON",
-    },
-    {
-        index: 2,
-        imgSrc: "https://static.ftshp.digital/img/p/1/0/7/8/7/8/0/1078780.jpg",
-        title: "Nike Air Force 1",
-        label: "Reducere",
-        price: "Pret: 600 RON",
-    },
-    {
-        index: 3,
-        imgSrc: "https://static.ftshp.digital/img/p/7/8/1/6/3/3/781633.jpg",
-        title: "NIKE AIR PRESTO MID UTILITY",
-        label: "Nou",
-        price: "Pret: 800 RON",
-    },
-];
 
-export default function Favorite() {
+export default function Favorite({ orderItems, total, favorites, bestseller }) {
     const { auth } = usePage().props;
     const { loggedIn, name, profile, admin } = useAuth(auth);
     return (
@@ -40,39 +17,35 @@ export default function Favorite() {
                 name={name}
                 profile_photo={profile}
                 admin={admin}
+                orderItems={orderItems}
+                total={total}
             />
             <h3 className="favorite-title">Favorite</h3>
-            <FavoriteComponent
-                name="Adidas Superstar"
-                price="300"
-                size="42"
-                image="../images/shoe1.png"
-                avalibility="In stoc"
-            ></FavoriteComponent>
-            <FavoriteComponent
-                name="Adidas Superstar"
-                price="300"
-                size="42"
-                image="../images/shoe1.png"
-                avalibility="In stoc"
-            ></FavoriteComponent>
-            <FavoriteComponent
-                name="Adidas Superstar"
-                price="300"
-                size="42"
-                image="../images/shoe1.png"
-                avalibility="In stoc"
-            ></FavoriteComponent>
+            {favorites.map((favorite, index) => (
+                <FavoriteComponent
+                    key={index}
+                    id={favorite.id}
+                    productId={favorite.product.id}
+                    name={favorite.product.name}
+                    price={favorite.product.price}
+                    size={favorite.size}
+                    image={"/storage/" + favorite.product.img_src}
+                    avalability={favorite.product.is_active}
+                    category={favorite.product.category}
+                />
+            ))}
             <h3 className="cart-title-recomandation">Produse Recomandate</h3>
             <ProductSlider>
-                {cardsData.map((card, index) => (
+                {bestseller.map((card, index) => (
                     <Card
                         key={index}
                         className="card"
-                        imgSrc={card.imgSrc}
+                        imgSrc={"/storage/" + card.img_src}
                         title={card.title}
                         label={card.label}
-                        price={card.price}
+                        price={card.price + " RON"}
+                        href={card.href}
+                        category={card.category}
                     />
                 ))}
             </ProductSlider>

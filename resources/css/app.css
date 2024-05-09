@@ -154,6 +154,10 @@ h6 {
     min-width: 250px !important;
 }
 
+.more-dropdown {
+    user-select: none;
+}
+
 @media (max-width: 991px) {
     .profile-pic {
         width: 40px;

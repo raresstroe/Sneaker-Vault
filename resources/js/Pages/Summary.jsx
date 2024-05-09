@@ -85,8 +85,8 @@ export default function Summary({ order, orderItems, total }) {
                 <p className="summary-total-text">
                     Total Comanda:{" "}
                     {order.total_price >= 450
-                        ? total + " RON"
-                        : total + 20 + " RON"}
+                        ? order.total_discounted_price + " RON"
+                        : order.total_discounted_price + 20 + " RON"}
                 </p>
                 <p className="summary-side-text">
                     Prin plasarea comenzii, ești de acord cu &nbsp;

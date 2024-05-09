@@ -81,15 +81,15 @@ export default function Home({
             </ProductSlider>
             <h1 className="sports">Sporturi</h1>
             <div className="d-flex flex-wrap justify-content-center categories-div">
-                <Link href="/categories/football" className="category-link">
+                <Link href="/sports?type=football" className="category-link">
                     <img src="../images/football.png" className="sport-img" />
                     <span className="button-categories">Fotbal</span>
                 </Link>
-                <Link href="/categories/running" className="category-link">
+                <Link href="/sports?type=running" className="category-link">
                     <img src="../images/running.jpg" className="sport-img" />
                     <span className="button-categories">Alergare</span>
                 </Link>
-                <Link href="/categories/basketball" className="category-link">
+                <Link href="/sports?type=basket" className="category-link">
                     <img src="../images/basketball.png" className="sport-img" />
                     <span className="button-categories">Basket</span>
                 </Link>

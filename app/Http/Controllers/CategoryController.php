@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
+use Illuminate\Support\Collection;
 
 class CategoryController extends Controller
 {
@@ -32,18 +33,6 @@ class CategoryController extends Controller
             case 'mystery':
                 $products = Product::where('category', 4);
                 $categoryName = 'Mystery Vaults';
-                break;
-            case 'football':
-                $products = Product::where('category', 5);
-                $categoryName = 'Fotbal';
-                break;
-            case 'running':
-                $products = Product::where('category', 6);
-                $categoryName = 'Alergare';
-                break;
-            case 'basketball':
-                $products = Product::where('category', 7);
-                $categoryName = 'Basketball';
                 break;
             default:
                 abort(404);
@@ -101,6 +90,8 @@ class CategoryController extends Controller
                 });
             });
         }
+
+
         // Log::info($products->toSql());
         $products = $products->paginate(25);
 
@@ -123,6 +114,24 @@ class CategoryController extends Controller
             }
         }
 
+        $type = $request->query('type');
+
+        if ($type) {
+            switch ($type) {
+                case 'basket':
+                    $products = $products->where('type', 'basket');
+                    break;
+                case 'running':
+                    $products = $products->where('type', 'running');
+                    break;
+                case 'football':
+                    $products = $products->where('type', 'football');
+                    break;
+                default:
+                    break;
+            }
+        }
+
         return Inertia::render('Categories', [
             'title' => 'Incaltaminte ' . $categoryName,
             'category' => $category,
@@ -140,6 +149,37 @@ class CategoryController extends Controller
             'filters' => $filters,
             'orderItems' => $orderItems,
             'total' => $total,
+        ]);
+    }
+
+    public function sports(Request $request)
+    {
+        $type = $request->query('type');
+
+        $orderItems = [];
+        $total = 0;
+        if (Auth::check()) {
+            $user = Auth::user();
+            $order = Order::where('user_id', $user->id)
+                ->where('order_status', 'open')
+                ->first();
+
+            $orderItems = [];
+            $total = 0;
+
+            if ($order) {
+                $orderItems = $order->items()->with('product')->get();
+                $total = $orderItems->sum(function ($item) {
+                    return $item->quantity * $item->product->price;
+                });
+            }
+        }
+
+
+        return Inertia::render('Sports', [
+            'orderItems' => $orderItems,
+            'total' => $total,
+            'type' => $type,
         ]);
     }
 }

@@ -63,6 +63,25 @@ export default function Product({
         });
     };
 
+    const addToFavorites = () => {
+        let selectedSize = "";
+        if (category != 4) {
+            selectedSize = document.getElementById("product-size").value;
+        }
+        if (category == 4) {
+            selectedSize = "0";
+        }
+        if (selectedSize === "1") {
+            alert("Alege o marime");
+            return;
+        }
+
+        Inertia.post("/favorites/add", {
+            product_id: array[0].id,
+            size: selectedSize,
+        });
+    };
+
     return (
         <div>
             <Header
@@ -126,7 +145,10 @@ export default function Product({
                         >
                             Adauga in cos
                         </Button>
-                        <button className="btn btn-dark product-heart-button">
+                        <button
+                            className="btn btn-dark product-heart-button"
+                            onClick={addToFavorites}
+                        >
                             <FontAwesomeIcon
                                 icon={faHeart}
                                 className="product-heart"

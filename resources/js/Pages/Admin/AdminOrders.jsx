@@ -45,7 +45,14 @@ export default function AdminOrders({ orders }) {
                             Adresa:{" "}
                             {order.shipping_address.split(";").join(", ")}
                         </p>
-                        <p>Suma: {order.total_price} RON</p>
+
+                        <p>
+                            Suma:{" "}
+                            {order.total_discounted_price
+                                ? order.total_discounted_price
+                                : order.total_price}{" "}
+                            RON
+                        </p>
                         <p>
                             Modalitate de plata:{" "}
                             {order.payment_method == "cash" ? "Numerar" : ""}

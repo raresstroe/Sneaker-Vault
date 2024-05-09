@@ -13,13 +13,19 @@ import { Inertia } from "@inertiajs/inertia";
 const Categories = ({ title, category, array, brands, orderItems, total }) => {
     const [selectedFilters, setSelectedFilters] = useState([]);
     const [selectedSort, setSelectedSort] = useState("");
+    const [selectedType, setSelectedType] = useState("");
+
     const { auth } = usePage().props;
     const { loggedIn, name, profile, admin } = useAuth(auth);
     console.log(array);
+    const arrayAsArray = Object.values(array);
+
     useEffect(() => {
         const queryParams = new URLSearchParams(window.location.search);
         const filters = queryParams.get("filter") || "";
         setSelectedFilters(filters.split(","));
+        setSelectedSort(queryParams.get("sort") || "");
+        setSelectedType(queryParams.get("type") || "");
     }, []);
 
     const handleSubmit = (e) => {
@@ -27,8 +33,8 @@ const Categories = ({ title, category, array, brands, orderItems, total }) => {
 
         const filters = selectedFilters.join(",");
         const query = selectedSort
-            ? `?filter=${filters}&sort=${selectedSort}`
-            : `?filter=${filters}`;
+            ? `?filter=${filters}&sort=${selectedSort}&type=${selectedType}`
+            : `?filter=${filters}&type=${selectedType}`;
 
         Inertia.visit(`/categories/${category}${query}`, {
             only: ["array"],
@@ -52,7 +58,7 @@ const Categories = ({ title, category, array, brands, orderItems, total }) => {
         const selectedOption = e.target.value;
         setSelectedSort(selectedOption);
         const filters = selectedFilters.join(",");
-        const query = `?filter=${filters}&sort=${selectedOption}`;
+        const query = `?filter=${filters}&sort=${selectedOption}&type=${selectedType}`;
 
         Inertia.visit(`/categories/${category}${query}`);
     };
@@ -267,7 +273,7 @@ const Categories = ({ title, category, array, brands, orderItems, total }) => {
             </Offcanvas>
             <div className="categories-div">
                 <div className="categories-container">
-                    {array.map((card, index) => (
+                    {arrayAsArray.map((card, index) => (
                         <CardCategories
                             key={index}
                             className="card"

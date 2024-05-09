@@ -35,7 +35,7 @@ const categories = [
         index: 2,
         title: "Sport",
         content:
-            '<a href="/categories/football">Fotbal</a><br/><a href="/categories/basketball">Basket</a><br/><a href="/categories/running">Alergare</a>',
+            '<a href="/sports?type=football">Fotbal</a><br/><a href="/sports?type=basket">Basket</a><br/><a href="/sports?type=running">Alergare</a>',
         maxHeight: "70px",
     },
 ];
@@ -103,6 +103,12 @@ const Header = (props) => {
                                         as="button"
                                     >
                                         Contul meu
+                                    </ResponsiveNavLink>
+                                    <ResponsiveNavLink
+                                        href="/favorites"
+                                        as="button"
+                                    >
+                                        Favorite
                                     </ResponsiveNavLink>
 
                                     <ResponsiveNavLink
@@ -202,26 +208,36 @@ const Header = (props) => {
                                 )}
 
                                 {orderItems.length !== 0
-                                    ? orderItems.map((item, index) => (
-                                          <NavDropdown.Item
-                                              eventKey={index}
-                                              href={item.product.href}
-                                          >
-                                              <OrderDropdown
-                                                  key={index}
-                                                  imgSrc={
-                                                      "/storage/" +
-                                                      item.product.img_src
-                                                  }
-                                                  price={item.product.price}
-                                                  quantity={item.quantity}
-                                                  name={item.product.title}
-                                              />
-                                          </NavDropdown.Item>
-                                      ))
+                                    ? orderItems
+                                          .slice(0, 3)
+                                          .map((item, index) => (
+                                              <NavDropdown.Item
+                                                  eventKey={index}
+                                                  href={item.product.href}
+                                              >
+                                                  <OrderDropdown
+                                                      key={index}
+                                                      imgSrc={
+                                                          "/storage/" +
+                                                          item.product.img_src
+                                                      }
+                                                      price={item.product.price}
+                                                      quantity={item.quantity}
+                                                      name={item.product.title}
+                                                  />
+                                              </NavDropdown.Item>
+                                          ))
                                     : ""}
+
                                 {orderItems.length !== 0 ? (
                                     <div>
+                                        {orderItems.length > 3 && (
+                                            <NavDropdown.Item disabled>
+                                                <span className="more-dropdown">
+                                                    plus altele...
+                                                </span>
+                                            </NavDropdown.Item>
+                                        )}
                                         <NavDropdown.Item className="disabled">
                                             <hr />
                                             <div>
@@ -252,21 +268,21 @@ const Header = (props) => {
                 <Offcanvas show={show} onHide={handleClose}>
                     <Offcanvas.Header closeButton></Offcanvas.Header>
                     <p className="heading-header">Sneaker Vault</p>
-                    <div style={{ display: "flex", justifyContent: "center" }}>
+                    {/* <div style={{ display: "flex", justifyContent: "center" }}>
                         <Form
                             className="d-flex form-inputs"
                             style={{ width: "80%" }}
                         >
                             <FormControl
                                 type="text"
-                                placeholder="Search any product..."
+                                placeholder="Cauta orice produs..."
                                 className="mr-sm-2"
                             />
                             <Button variant="">
                                 <FontAwesomeIcon icon={faMagnifyingGlass} />{" "}
                             </Button>
                         </Form>
-                    </div>
+                    </div> */}
                     <Offcanvas.Body>
                         <Nav className="flex-column">
                             <ToggleContent

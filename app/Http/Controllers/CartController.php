@@ -9,6 +9,11 @@ use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Models\Voucher;
+use Illuminate\Support\Str;
+
+
+
 
 
 class CartController extends Controller
@@ -17,8 +22,9 @@ class CartController extends Controller
     {
         $user = Auth::user();
         $order = Order::where('user_id', $user->id)
-            ->where('order_status', 'open')
+            ->where('order_status', 'open')->with('voucher')
             ->first();
+
 
         $orderItems = [];
         $total = 0;
@@ -36,6 +42,7 @@ class CartController extends Controller
             'orderItems' => $orderItems,
             'total' => $total,
             'bestseller' => $bestseller,
+            'order' => $order,
         ]);
     }
 
@@ -76,6 +83,27 @@ class CartController extends Controller
             $order->total_price = $totalOrderPrice;
             $order->save();
 
+            $orderItems = OrderItem::Where('order_id', $order->id);
+            $total = $orderItems->sum('total_price');
+            // Log::info($total);
+
+            if ($order->voucher_id) {
+                $voucher = Voucher::find($order->voucher_id);
+                if ($voucher) {
+                    if ($voucher->discount_type === 'fixed') {
+                        $order->total_discounted_price = $total - $voucher->discount_value;
+                    } elseif ($voucher->discount_type === 'percentage') {
+                        $discountAmount = ($voucher->discount_value / 100) * $total;
+                        $order->total_discounted_price = $total - $discountAmount;
+                    }
+                }
+            } else {
+                $order->total_discounted_price = $total;
+            }
+
+            $order->total_price = $total;
+            $order->save();
+
             return redirect()->back()->with('success', 'Product added to cart successfully');
         } catch (\Exception $e) {
             Log::error('Error adding product to cart: ' . $e->getMessage());
@@ -98,6 +126,20 @@ class CartController extends Controller
 
             $total = $order->items()->sum('total_price');
 
+            if ($order->voucher_id) {
+                $voucher = Voucher::find($order->voucher_id);
+                if ($voucher) {
+                    if ($voucher->discount_type === 'fixed') {
+                        $order->total_discounted_price = $total - $voucher->discount_value;
+                    } elseif ($voucher->discount_type === 'percentage') {
+                        $discountAmount = ($voucher->discount_value / 100) * $total;
+                        $order->total_discounted_price = $total - $discountAmount;
+                    }
+                }
+            } else {
+                $order->total_discounted_price = $total;
+            }
+
             $order->total_price = $total;
             $order->save();
 
@@ -117,24 +159,84 @@ class CartController extends Controller
 
             $orderItem = OrderItem::findOrFail($id);
             $quantity = $request->input('quantity');
-            $price = $orderItem->price;
-
+            $price = $orderItem->product->price;
 
             $orderItem->update([
                 'quantity' => $quantity,
-                'total_price' => $price * $request->input('quantity'),
+                'total_price' => $price * $quantity,
             ]);
 
             $order = $orderItem->order;
+            $orderItems = OrderItem::Where('order_id', $order->id);
+            $total = $orderItems->sum('total_price');
+            // Log::info($total);
 
-            $total = $order->items()->sum('total_price');
+            if ($order->voucher_id) {
+                $voucher = Voucher::find($order->voucher_id);
+                if ($voucher) {
+                    if ($voucher->discount_type === 'fixed') {
+                        $order->total_discounted_price = $total - $voucher->discount_value;
+                    } elseif ($voucher->discount_type === 'percentage') {
+                        $discountAmount = ($voucher->discount_value / 100) * $total;
+                        $order->total_discounted_price = $total - $discountAmount;
+                    }
+                }
+            } else {
+                $order->total_discounted_price = $total;
+            }
 
             $order->total_price = $total;
             $order->save();
+
             return redirect()->back()->with('success', 'Quantity updated successfully');
         } catch (\Exception $e) {
             Log::error('Error updating quantity: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Error updating quantity. Please try again.');
+        }
+    }
+
+
+    public function applyVoucher(Request $request)
+    {
+        try {
+            $request->validate([
+                'voucher' => 'required|string',
+            ]);
+
+            $voucherCode = Str::lower($request->input('voucher'));
+
+            $voucher = Voucher::whereRaw('LOWER(code) = ?', [$voucherCode])
+                ->where('valid_until', '>=', now())
+                ->where('is_active', 1)
+                ->first();
+
+            if ($voucher) {
+                $user = Auth::user();
+                $order = Order::where('user_id', $user->id)
+                    ->where('order_status', 'open')
+                    ->first();
+
+                if ($order) {
+                    if ($voucher->discount_type === 'fixed') {
+                        $order->total_discounted_price = $order->total_price - $voucher->discount_value;
+                    } elseif ($voucher->discount_type === 'percentage') {
+                        $discountAmount = ($voucher->discount_value / 100) * $order->total_price;
+                        $order->total_discounted_price = $order->total_price - $discountAmount;
+                    }
+
+                    $order->voucher_id = $voucher->id;
+                    $order->save();
+
+                    return redirect()->back()->with('success', 'Voucher applied successfully');
+                } else {
+                    return redirect()->back()->with('error', 'No open order found');
+                }
+            } else {
+                return redirect()->back()->with('error', 'Invalid or expired voucher');
+            }
+        } catch (\Exception $e) {
+            Log::error('Error applying voucher: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Error applying voucher. Please try again.');
         }
     }
 }

@@ -60,7 +60,11 @@ export default function Dashboard({ auth, orders, orderItems }) {
                                 </div>
                                 <div>
                                     <h4 className="text-2xl font-semibold">
-                                        Total: {order.total_price} RON
+                                        Total:{" "}
+                                        {order.total_discounted_price
+                                            ? order.total_discounted_price
+                                            : order.total_price}{" "}
+                                        RON
                                     </h4>
                                     <h4 className="text-2xl font-semibold">
                                         Status:{" "}

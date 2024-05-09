@@ -7,11 +7,17 @@ import { useState } from "react";
 import ProductSlider from "@/Components/ProductSlider";
 import Card from "@/Components/Card";
 import { useAuth } from "@/Components/includes/useAuth";
+import { Inertia } from "@inertiajs/inertia";
 
-export default function Cart({ orderItems, total, bestseller }) {
+export default function Cart({ orderItems, total, bestseller, order }) {
     const { auth } = usePage().props;
     const { loggedIn, name, profile, admin } = useAuth(auth);
     const [voucher, setVoucher] = useState("");
+
+    const applyVoucher = () => {
+        Inertia.post("/cart/voucher", { voucher });
+    };
+
     return (
         <div>
             <Header
@@ -56,13 +62,22 @@ export default function Cart({ orderItems, total, bestseller }) {
                             ? "0 RON"
                             : "20 RON"}
                     </p>
+                    {order.total_discounted_price !== 0 ? (
+                        <p className="cart-summary-item">
+                            Voucher:{""} -
+                            {order.total_price - order.total_discounted_price}{" "}
+                            RON
+                        </p>
+                    ) : (
+                        ""
+                    )}
                     <p className="cart-total">Total: </p>
                     <p className="cart-total-value">
                         {orderItems.length == 0
                             ? "0 RON"
                             : total >= 450
-                            ? total + " RON"
-                            : total + 20 + " RON"}
+                            ? order.total_discounted_price + " RON"
+                            : order.total_discounted_price + 20 + " RON"}
                     </p>
                     {orderItems.length !== 0 ? (
                         <>
@@ -75,19 +90,26 @@ export default function Cart({ orderItems, total, bestseller }) {
                                 Pasul urmator
                             </button>
                             <hr />
-                            <p className="cart-voucher-title">Voucher</p>
-                            <input
-                                type="text"
-                                value={voucher}
-                                onChange={(e) => setVoucher(e.target.value)}
-                                placeholder="Voucher/Cod Promotional"
-                            />
-                            <button
-                                className="btn btn-dark product-heart-button cart-button"
-                                onClick={() => applyVoucher(voucher)}
-                            >
-                                Aplica Voucher
-                            </button>
+                            <>
+                                <p className="cart-voucher-title">Voucher</p>
+                                <input
+                                    type="text"
+                                    value={voucher}
+                                    onChange={(e) => setVoucher(e.target.value)}
+                                    placeholder="Voucher/Cod Promotional"
+                                />
+                                <button
+                                    className="btn btn-dark product-heart-button cart-button"
+                                    onClick={applyVoucher}
+                                >
+                                    Aplica Voucher
+                                </button>
+                                {order.voucher == null ? (
+                                    ""
+                                ) : (
+                                    <p>Voucher folosit: {order.voucher.code}</p>
+                                )}
+                            </>
                         </>
                     ) : (
                         ""

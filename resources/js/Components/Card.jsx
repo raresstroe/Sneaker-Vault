@@ -17,10 +17,7 @@ const Card = ({ imgSrc, title, label, price, href, category }) => {
                     <img src={imgSrc} className="cards" alt={title} />
                 </Link>
                 <div className="button-cards-container">
-                    <Link
-                        href="button-cards-link"
-                        className="button-cards-link"
-                    >
+                    <Link href={href} className="button-cards-link">
                         <FontAwesomeIcon icon={faHeart} className="heart" />
                     </Link>
                     <span className="label-cards">{label}</span>
