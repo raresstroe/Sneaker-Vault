@@ -18,19 +18,23 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
-        $order = Order::where('user_id', $user->id)
-            ->where('order_status', 'open')
-            ->first();
-
         $orderItems = [];
         $total = 0;
+        if (Auth::check()) {
+            $user = Auth::user();
+            $order = Order::where('user_id', $user->id)
+                ->where('order_status', 'open')
+                ->first();
 
-        if ($order) {
-            $orderItems = $order->items()->with('product')->get();
-            $total = $orderItems->sum(function ($item) {
-                return $item->quantity * $item->product->price;
-            });
+            $orderItems = [];
+            $total = 0;
+
+            if ($order) {
+                $orderItems = $order->items()->with('product')->get();
+                $total = $orderItems->sum(function ($item) {
+                    return $item->quantity * $item->product->price;
+                });
+            }
         }
 
         $banners = Banner::all()->where('is_active', 1);
@@ -51,7 +55,6 @@ class HomeController extends Controller
             'brands' => $brands,
             'bestseller' => $bestseller,
             'sales' => $sales,
-            'order' => $order,
             'orderItems' => $orderItems,
             'total' => $total,
         ]);

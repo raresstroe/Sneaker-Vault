@@ -4,7 +4,7 @@ import Footer from "../Components/Footer";
 import { usePage } from "@inertiajs/react";
 import { useAuth } from "@/Components/includes/useAuth";
 
-const Content = ({ title, content, orderItems, totalC }) => {
+const Content = ({ title, content, orderItems, total }) => {
     const { auth } = usePage().props;
     const { loggedIn, name, profile, admin } = useAuth(auth);
 
