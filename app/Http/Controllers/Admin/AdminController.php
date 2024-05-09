@@ -14,9 +14,15 @@ class AdminController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $orders = Order::all();
-        $monthly_revenue = $orders->where('created_at', '>=', now()->subMonth())->sum('total_price');
-        $total_revenue = $orders->sum('total_price');
+        $orders = Order::whereNotNull('shipping_address')->get();
+        $monthly_revenue = $orders->where('created_at', '>=', now()->subMonth())
+            ->sum(function ($order) {
+                return $order->total_discounted_price ?? $order->total_price;
+            });
+
+        $total_revenue = $orders->sum(function ($order) {
+            return $order->total_discounted_price ?? $order->total_price;
+        });
         $total_orders = $orders->count();
         $monthly_orders = $orders->where('created_at', '>=', now()->subMonth())->count();
         $total_customers = $orders->groupBy('user_id')->count();

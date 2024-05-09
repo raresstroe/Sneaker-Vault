@@ -11,7 +11,7 @@ class AdminOrdersController extends Controller
 {
     public function index(Request $request)
     {
-        $orders = Order::all();
+        $orders = Order::whereNotNull('shipping_address')->get();
 
         return Inertia::render('Admin/AdminOrders', ['orders' => $orders]);
     }

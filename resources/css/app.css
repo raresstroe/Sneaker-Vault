@@ -1649,3 +1649,66 @@ ul.content-text {
     width: 17rem;
     object-fit: cover;
 }
+
+/*Admin Voucher*/
+.voucher-edit-wrapper {
+    display: flex;
+    gap: 1%;
+    margin: 1% 0;
+    text-wrap: nowrap;
+    align-items: center;
+}
+
+.modal-scrollable-content {
+    max-height: 400px;
+    overflow-y: auto;
+}
+.voucher-checkbox-container {
+    display: flex;
+    gap: 1%;
+    margin: 1% 0;
+    align-items: center;
+}
+
+.form-voucher {
+    display: flex;
+    gap: 1%;
+    margin: 1% 0;
+}
+.voucher-card-buttons {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    gap: 2%;
+    margin-top: 3%;
+}
+
+.admin-voucher-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1%;
+    margin: 0 1%;
+}
+.admin-voucher-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3%;
+}
+.admin-voucher-card {
+    flex: 1 1 300px;
+    max-width: 300px;
+}
+
+.voucher-card-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 9%;
+}
+
+.voucher-card-info p {
+    margin: 0;
+}

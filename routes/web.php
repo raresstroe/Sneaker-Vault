@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\AdminProductsController;
 use App\Http\Controllers\Admin\AdminBannersController;
 use App\Http\Controllers\Admin\AdminOrdersController;
 use App\Http\Controllers\Admin\AdminUsersController;
+use App\Http\Controllers\Admin\AdminVoucherController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ThankYouController;
@@ -131,6 +132,14 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::get('/orders', [AdminOrdersController::class, 'index'])->name('orders.index');
     Route::put('/orders/status/{order}', [AdminOrdersController::class, 'status']);
     Route::delete('/orders/{order}', [AdminOrdersController::class, 'delete'])->name('orders.delete');
+});
+
+//Admin Voucher
+Route::prefix('admin')->middleware(['admin'])->group(function () {
+    Route::get('/voucher', [AdminVoucherController::class, 'index'])->name('voucher.index');
+    Route::post('/voucher', [AdminVoucherController::class, 'add']);
+    Route::post('/voucher/{voucher}', [AdminVoucherController::class, 'update']);
+    Route::delete('/voucher/{voucher}', [AdminVoucherController::class, 'destroy']);
 });
 
 //Filepond Routes

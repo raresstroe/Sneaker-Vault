@@ -87,7 +87,7 @@ export default function BannerCard(props, banners) {
             <Modal show={showModal} onHide={() => setShowModal(false)} centered>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        Esti sigur ca vrei sa stergi produsul?
+                        Esti sigur ca vrei sa stergi bannerul?
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="admin-delete-modal">

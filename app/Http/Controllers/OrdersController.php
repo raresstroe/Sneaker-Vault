@@ -27,9 +27,11 @@ class OrdersController extends Controller
         foreach ($orders as $order) {
             $items = $order->items()->with('product')->get();
             $orderItems[$order->id] = $items;
-            $total += $items->sum(function ($item) {
-                return $item->quantity * $item->product->price;
-            });
+        }
+        if ($order->total_discounted_price) {
+            $total = $order->total_discounted_price;
+        } else {
+            $total = $order->total_price;
         }
 
         return Inertia::render('Dashboard', [

@@ -17,7 +17,6 @@ export default function Cart({ orderItems, total, bestseller, order }) {
     const applyVoucher = () => {
         Inertia.post("/cart/voucher", { voucher });
     };
-
     return (
         <div>
             <Header
@@ -62,15 +61,16 @@ export default function Cart({ orderItems, total, bestseller, order }) {
                             ? "0 RON"
                             : "20 RON"}
                     </p>
-                    {order.total_discounted_price !== 0 ? (
+                    {order && order.total_discounted_price ? (
                         <p className="cart-summary-item">
-                            Voucher:{""} -
+                            Voucher: -{" "}
                             {order.total_price - order.total_discounted_price}{" "}
                             RON
                         </p>
                     ) : (
                         ""
                     )}
+
                     <p className="cart-total">Total: </p>
                     <p className="cart-total-value">
                         {orderItems.length == 0

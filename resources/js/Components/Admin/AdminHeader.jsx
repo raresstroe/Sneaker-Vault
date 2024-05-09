@@ -25,6 +25,8 @@ import ViewCarouselIcon from "@mui/icons-material/ViewCarousel";
 import PersonIcon from "@mui/icons-material/Person";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import NoteAddIcon from "@mui/icons-material/NoteAdd";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import LocalActivityIcon from "@mui/icons-material/LocalActivity";
 
 const drawerWidth = 240;
 
@@ -198,7 +200,7 @@ export default function AdminHeader({ children, title }) {
                     {[
                         { text: "Utilizatori", path: "/admin/users" },
                         { text: "Comenzi", path: "/admin/orders" },
-                        { text: "Newsletter", path: "/admin/newsletter" },
+                        { text: "Voucher", path: "/admin/voucher" },
                     ].map((item, index) => (
                         <Link
                             href={item.path}
@@ -227,7 +229,7 @@ export default function AdminHeader({ children, title }) {
                                         ) : item.text === "Comenzi" ? (
                                             <LocalShippingIcon className="admin-header-icon" />
                                         ) : (
-                                            <MailIcon className="admin-header-icon" />
+                                            <LocalActivityIcon className="admin-header-icon" />
                                         )}
                                     </ListItemIcon>
                                     <ListItemText

@@ -71,9 +71,11 @@ class ProductsController extends Controller
 
             if ($order) {
                 $orderItems = $order->items()->with('product')->get();
-                $total = $orderItems->sum(function ($item) {
-                    return $item->quantity * $item->product->price;
-                });
+            }
+            if ($order->total_discounted_price) {
+                $total = $order->total_discounted_price;
+            } else {
+                $total = $order->total_price;
             }
         }
 
