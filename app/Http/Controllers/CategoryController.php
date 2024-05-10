@@ -112,6 +112,13 @@ class CategoryController extends Controller
                     return $item->quantity * $item->product->price;
                 });
             }
+            if ($order) {
+                if ($order->total_discounted_price != 0) {
+                    $total = $order->total_discounted_price;
+                } else if ($order->total_price != 0) {
+                    $total = $order->total_price;
+                }
+            }
         }
 
         $type = $request->query('type');

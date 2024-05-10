@@ -20,21 +20,8 @@ class ThankYouController extends Controller
                 ->first();
 
             $orderItems = [];
-            $total = 0;
-
-            if ($order) {
-                $orderItems = $order->items()->with('product')->get();
-            }
-            if ($order->total_discounted_price) {
-                $total = $order->total_discounted_price;
-            } else {
-                $total = $order->total_price;
-            }
         }
 
-        return Inertia::render('ThankYou', [
-            'orderItems' => $orderItems,
-            'total' => $total,
-        ]);
+        return Inertia::render('ThankYou', []);
     }
 }

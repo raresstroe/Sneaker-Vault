@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use App\Mail\MyTestEmail;
+use Illuminate\Support\Facades\Mail;
 
 class SummaryController extends Controller
 {
@@ -45,6 +48,10 @@ class SummaryController extends Controller
             ->first();
         $order->order_status = 'pending';
         $order->save();
+        $name = $user->name;
+        $email = $user->email;
+
+        Mail::to($email)->send(new MyTestEmail($name));
 
         session(['checkout_visited' => false]);
         return redirect()->route('thank-you');

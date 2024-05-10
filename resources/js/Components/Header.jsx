@@ -194,13 +194,20 @@ const Header = (props) => {
                                         </span>
                                         <div className="d-flex flex-column ms-2 text-nowrap">
                                             <span className="qty">
-                                                {orderItems.length}{" "}
-                                                {orderItems.length == 1
-                                                    ? " Produs"
+                                                {orderItems
+                                                    ? orderItems.length
+                                                    : "0"}{" "}
+                                                {orderItems
+                                                    ? orderItems.length === 1
+                                                        ? " Produs"
+                                                        : " Produse"
                                                     : " Produse"}
                                             </span>
                                             <span className="fw-bold">
-                                                {props.total} RON
+                                                {props.total
+                                                    ? props.total
+                                                    : "0"}{" "}
+                                                RON
                                             </span>
                                         </div>
                                     </div>
@@ -211,15 +218,19 @@ const Header = (props) => {
                                 onMouseEnter={() => setIsOpen(true)}
                                 onMouseLeave={() => setIsOpen(false)}
                             >
-                                {orderItems.length == 0 ? (
+                                {orderItems ? (
+                                    orderItems.length === 0 ? (
+                                        <NavDropdown.Item eventKey="1">
+                                            Nu ai produse in cos.
+                                        </NavDropdown.Item>
+                                    ) : null
+                                ) : (
                                     <NavDropdown.Item eventKey="1">
                                         Nu ai produse in cos.
                                     </NavDropdown.Item>
-                                ) : (
-                                    ""
                                 )}
 
-                                {orderItems.length !== 0
+                                {orderItems
                                     ? orderItems
                                           .slice(0, 3)
                                           .map((item, index) => (
@@ -241,7 +252,7 @@ const Header = (props) => {
                                           ))
                                     : ""}
 
-                                {orderItems.length !== 0 ? (
+                                {orderItems ? (
                                     <div>
                                         {orderItems.length > 3 && (
                                             <NavDropdown.Item disabled>

@@ -34,12 +34,13 @@ class CartController extends Controller
         if ($order) {
             $orderItems = $order->items()->with('product')->get();
         }
-        if ($order->total_discounted_price) {
-            $total = $order->total_discounted_price;
-        } else {
-            $total = $order->total_price;
+        if ($order) {
+            if ($order->total_discounted_price != 0) {
+                $total = $order->total_discounted_price;
+            } else if ($order->total_price != 0) {
+                $total = $order->total_price;
+            }
         }
-
         return Inertia::render('Cart', [
             'orderItems' => $orderItems,
             'total' => $total,

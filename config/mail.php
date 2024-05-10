@@ -35,6 +35,9 @@ return [
 
     'mailers' => [
         'smtp' => [
+            'mailtrap' => [
+                'transport' => 'mailtrap',
+            ],
             'transport' => 'smtp',
             'url' => env('MAIL_URL'),
             'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
@@ -108,8 +111,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'stroerares0@gmail.com'),
+        'name' => env('MAIL_FROM_NAME', 'SneakerVault'),
     ],
 
     /*
