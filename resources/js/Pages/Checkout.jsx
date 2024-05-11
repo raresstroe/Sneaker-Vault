@@ -378,7 +378,7 @@ export default function Checkout(props) {
                                     "0 RON"
                                 )}
 
-                                {console.log(props.order)}
+                                {/* {console.log(props.order)} */}
                             </div>
                         </div>
 
@@ -388,11 +388,9 @@ export default function Checkout(props) {
                                 {props.orderItems.length == 0
                                     ? "0 RON"
                                     : props.total >= 450
-                                    ? props.order.total_discounted_price +
-                                      " RON"
-                                    : props.total_discounted_price +
-                                      20 +
-                                      " RON"}
+                                    ? props.order.total
+                                    : props.total + 20}{" "}
+                                RON
                             </p>
                             <button
                                 className="btn btn-dark cart-button"

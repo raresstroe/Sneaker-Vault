@@ -18,8 +18,18 @@ class MyTestEmail extends Mailable
      *
      * @return void
      */
-    public function __construct(private $name)
-    {
+    public function __construct(
+        private $name,
+        private $deliveryDate,
+        private $orderDate,
+        private $id,
+        private $paymentMethod,
+        private $address,
+        private $postalCode,
+        private $city,
+        private $total,
+        private $phone,
+    ) {
         //
     }
 
@@ -31,7 +41,7 @@ class MyTestEmail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'My Test Email',
+            subject: 'Comanda Ta',
         );
     }
 
@@ -44,7 +54,18 @@ class MyTestEmail extends Mailable
     {
         return new Content(
             view: 'mail.test-email',
-            with: ['name' => $this->name],
+            with: [
+                'name' => $this->name,
+                'deliveryDate' => $this->deliveryDate,
+                'orderDate' => $this->orderDate,
+                'id' => $this->id,
+                'paymentMethod' => $this->paymentMethod,
+                'address' => $this->address,
+                'postalCode' => $this->postalCode,
+                'city' => $this->city,
+                'total' => $this->total,
+                'phone' => $this->phone,
+            ],
         );
     }
 }

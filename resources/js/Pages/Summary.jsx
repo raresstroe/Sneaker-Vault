@@ -84,7 +84,7 @@ export default function Summary({ order, orderItems, total }) {
             <div className="summary-send-container">
                 <p className="summary-total-text">
                     Total Comanda:{" "}
-                    {order.total_price >= 450
+                    {order.total_discounted_price >= 450
                         ? order.total_discounted_price + " RON"
                         : order.total_discounted_price + 20 + " RON"}
                 </p>
