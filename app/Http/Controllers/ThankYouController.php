@@ -21,6 +21,7 @@ class ThankYouController extends Controller
 
             $orderItems = [];
         }
+        session(['checkout_visited' => false]);
 
         return Inertia::render('ThankYou', []);
     }

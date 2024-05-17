@@ -19,6 +19,7 @@ class SummaryController extends Controller
             return redirect()->route('checkout');
         }
         $user = Auth::user();
+        $total = 0;
 
         $order = Order::where('user_id', $user->id)
             ->where('order_status', 'open')
@@ -27,13 +28,13 @@ class SummaryController extends Controller
         if ($order) {
             $orderItems = $order->items()->with('product')->get();
         }
-
-        if ($order->total_discounted_price) {
-            $total = $order->total_discounted_price;
-        } else {
-            $total = $order->total_price;
+        if ($order) {
+            if ($order->total_discounted_price) {
+                $total = $order->total_discounted_price;
+            } else {
+                $total = $order->total_price;
+            }
         }
-
         return Inertia::render('Summary', [
             'orderItems' => $orderItems,
             'order' => $order,
@@ -83,7 +84,6 @@ class SummaryController extends Controller
 
         Mail::to($email)->send(new MyTestEmail($name, $deliveryDate, $orderDate, $id, $paymentMethod, $address, $postalCode, $city, $total, $phone));
 
-        session(['checkout_visited' => false]);
         return redirect()->route('thank-you');
     }
 }

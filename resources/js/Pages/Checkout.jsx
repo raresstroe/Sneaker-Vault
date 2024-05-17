@@ -388,7 +388,7 @@ export default function Checkout(props) {
                                 {props.orderItems.length == 0
                                     ? "0 RON"
                                     : props.total >= 450
-                                    ? props.order.total
+                                    ? props.total
                                     : props.total + 20}{" "}
                                 RON
                             </p>

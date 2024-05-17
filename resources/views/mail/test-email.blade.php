@@ -6,17 +6,11 @@
     <title>Comanda</title>
   </head>
   <body>
-    <div class="">
-      <div class="aHl"></div>
-      <div id=":18k" tabindex="-1"></div>
-      <div
-        id=":18u"
-        class="ii gt"
-        jslog="20277; u014N:xr6bB; 1:WyIjdGhyZWFkLWY6MTc5NjU3OTAxOTM0Njk5MzYyNyJd; 4:WyIjbXNnLWY6MTc5NjU3OTAxOTM0Njk5MzYyNyJd"
-      >
-        <div id=":182" class="a3s aiL">
-          <u></u>
-
+    <div>
+      <div></div>
+      <div tabindex="-1"></div>
+      <div>
+        <div>
           <div style="margin: 0; padding: 0" bgcolor="#f4f5f7" link="#333333">
             <table
               width="100%"
@@ -95,10 +89,10 @@
                                             "
                                           >
                                             <img
-                                              src="https://picjj.com/images/2024/05/10/NItGo.png" 
+                                              src="https://i.ibb.co/pQ24ZjQ/Logo-png.png" 
                                               border="0"
                                               style="vertical-align: top"
-                                              width="100"
+                                              width="150"
                                             />
                                           </td>
                                         </tr>
@@ -159,9 +153,9 @@
                                               border-collapse: collapse;
                                             "
                                           >
-                                            <span class="il">Comanda</span>
+                                            <span>Comanda</span>
                                             ta a
-                                            <span class="il">fost</span>
+                                            <span>fost</span>
                                             primită de noi.
                                           </td>
                                         </tr>
@@ -247,8 +241,6 @@
                                                       width="27"
                                                       height="29"
                                                       alt=""
-                                                      class="CToWUd"
-                                                      data-bit="iit"
                                                     />
                                                   </td>
                                                   <td
@@ -310,8 +302,6 @@
                                                       width="26"
                                                       height="27"
                                                       alt=""
-                                                      class="CToWUd"
-                                                      data-bit="iit"
                                                     />
                                                   </td>
                                                   <td
@@ -375,8 +365,7 @@
                                     <p style="padding-bottom: 10px">
                                       Dragă {{$name}},
                                     </p>
-                                    <br />
-                                    vrem să-ți confirmăm primirea comenzii și
+                                    Vrem să-ți confirmăm primirea comenzii și
                                     să-ți mulțumim totodată că ne-ai ales! Poți
                                     verifica oricând statusul acesteia în
                                     <a
@@ -389,15 +378,6 @@
                                       target="_blank"
                                       >Comenzile tale</a
                                     >. <br />
-                                    <br />
-                                    Îți vom trimite încă un e-mail privitor la
-                                    livrare, de îndată ce
-                                    <span class="il">comanda</span>
-                                    va fi procesată în depozitul nostru.
-                                    Pachetul tău va fi expediat în cel mai scurt
-                                    timp posibil, însă e bine de știut că, în
-                                    cazuri excepționale, acesta poate ajunge cu
-                                    întârziere.
                                   </td>
                                 </tr>
 
@@ -715,12 +695,7 @@
                                       border-collapse: collapse;
                                     "
                                   >
-                                    Ține minte că acest e-mail este generat
-                                    automat și nu reprezintă acceptarea ofertei
-                                    pentru a încheia un contract de cumpărare.
-                                    Acesta este valabil numai după ce îți
-                                    confirmăm
-                                    <span class="il">comanda</span>. Poți să
+                                    Poți să
                                     verifici statusul comezii oricând în
                                     <a
                                       href="localhost/profile"
