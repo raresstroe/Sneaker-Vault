@@ -5,10 +5,12 @@ import Header from "@/Components/Header";
 import ItemCartSummary from "@/Components/ItemCartSummary";
 import Footer from "@/Components/Footer";
 import { useAuth } from "@/Components/includes/useAuth";
+import { useState } from "react";
 
 export default function Summary({ order, orderItems, total }) {
     const { auth } = usePage().props;
     const { loggedIn, name, profile, admin } = useAuth(auth);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const shippingAddress = order.shipping_address
         .split(";")
@@ -21,7 +23,10 @@ export default function Summary({ order, orderItems, total }) {
     const phone = shippingAddress[5];
 
     const handleSubmit = () => {
-        Inertia.post("/cart/summary/send");
+        if (!isSubmitting) {
+            setIsSubmitting(true);
+            Inertia.put("/cart/summary/send");
+        }
     };
     return (
         <div>

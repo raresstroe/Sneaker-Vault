@@ -20,6 +20,7 @@ export default function Product({
 }) {
     const { auth } = usePage().props;
     const { loggedIn, name, profile, admin } = useAuth(auth);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const category = array[0].category;
     const categoryMap = {
@@ -40,8 +41,7 @@ export default function Product({
     const handleClick = (index) => {
         setActiveItem(index);
     };
-    const [quantity, setQuantity] = useState(1);
-
+    const quantity = 1;
     const addToCart = () => {
         let selectedSize = "";
         if (category != 4) {
@@ -54,13 +54,15 @@ export default function Product({
             alert("Alege o marime");
             return;
         }
-
-        Inertia.post("/cart/add", {
-            product_id: array[0].id,
-            quantity: quantity,
-            size: selectedSize,
-            price: array[0].price,
-        });
+        if (!isSubmitting) {
+            setIsSubmitting(true);
+            Inertia.post("/cart/add", {
+                product_id: array[0].id,
+                quantity: quantity,
+                size: selectedSize,
+                price: array[0].price,
+            });
+        }
     };
 
     const addToFavorites = () => {
