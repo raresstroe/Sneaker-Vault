@@ -6,10 +6,8 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Order;
 use App\Models\OrderItem;
-use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-
 
 class OrdersController extends Controller
 {
@@ -24,14 +22,18 @@ class OrdersController extends Controller
         $orderItems = [];
         $total = 0;
 
-        foreach ($orders as $order) {
-            $items = $order->items()->with('product')->get();
-            $orderItems[$order->id] = $items;
-        }
-        if ($order->total_discounted_price) {
-            $total = $order->total_discounted_price;
-        } else {
-            $total = $order->total_price;
+        Log::info($orders);
+
+        if ($orders->isNotEmpty()) {
+            foreach ($orders as $order) {
+                $items = $order->items()->with('product')->get();
+                $orderItems[$order->id] = $items;
+                if ($order->total_discounted_price) {
+                    $total += $order->total_discounted_price;
+                } else {
+                    $total += $order->total_price;
+                }
+            }
         }
 
         return Inertia::render('Dashboard', [

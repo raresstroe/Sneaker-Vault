@@ -9,7 +9,9 @@ export default function OrderComponent(props) {
             <img src={props.image} />
             <div className="orders-left-side">
                 <p className="orders-name">{props.name}</p>
-                <p className="orders-size">Marime: {props.size}</p>
+                <p className="orders-size">
+                    {props.size == 0 ? "" : "Marime: " + props.size}
+                </p>
                 <p className="orders-size">Cantitate: {props.quantity}</p>
             </div>
             <div className="orders-right-side">
