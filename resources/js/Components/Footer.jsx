@@ -106,6 +106,13 @@ const Footer = () => {
                                     </Link>
                                 </li>
                                 <li>
+                                    <Link className="text-body" href="/orders">
+                                        <p className="footer-link">
+                                            Comenzile mele
+                                        </p>
+                                    </Link>
+                                </li>
+                                <li>
                                     <Link
                                         className="text-body"
                                         href="/register"

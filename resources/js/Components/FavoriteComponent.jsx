@@ -25,7 +25,7 @@ export default function FavoriteComponent(props) {
             product_id: props.productId,
             quantity: 1,
             size: selectedSize,
-            price: props.size,
+            price: props.price,
         });
     };
     return (

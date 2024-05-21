@@ -1252,6 +1252,13 @@ ul.content-text {
     margin: 1% 1% 2%;
 }
 
+.empty-favorite-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
 .heart-favorite {
     color: red;
 }

@@ -34,6 +34,11 @@ export default function Favorite({ orderItems, total, favorites, bestseller }) {
                     category={favorite.product.category}
                 />
             ))}
+            {favorites.length === 0 && (
+                <div className="empty-favorite-container">
+                    <h4>Nu ai produse favorite</h4>
+                </div>
+            )}
             <h3 className="cart-title-recomandation">Produse Recomandate</h3>
             <ProductSlider>
                 {bestseller.map((card, index) => (
