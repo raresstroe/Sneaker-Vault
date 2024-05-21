@@ -113,8 +113,8 @@ export default function Home({
             <Brands>
                 {brands.map((card, index) => (
                     <Link
-                        href={card.href}
                         key={index}
+                        href={card.href}
                         className="logo-container"
                         target="_blank"
                     >

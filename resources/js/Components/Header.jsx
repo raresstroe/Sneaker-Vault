@@ -42,13 +42,11 @@ const categories = [
 
 const Header = (props) => {
     const [show, setShow] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const orderItems = props.orderItems;
-    const [isOpen, setIsOpen] = useState(false);
-
-    const [searchTerm, setSearchTerm] = useState("");
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -59,6 +57,8 @@ const Header = (props) => {
             window.location.href = `/search?search=${encodedSearchTerm}`;
         }
     };
+
+    const orderItems = props.orderItems;
 
     return (
         <header>
@@ -78,7 +78,6 @@ const Header = (props) => {
                             ÎN 14 ZILE
                         </Nav.Link>
                     </Nav>
-
                     <a href="/">
                         <Image
                             className="d-lg-none store-logo-png"
@@ -86,7 +85,6 @@ const Header = (props) => {
                             alt="Store Logo"
                         />
                     </a>
-
                     <Nav className="d-flex align-items-center flex-row">
                         {props.loggedIn ? (
                             <>
@@ -117,12 +115,17 @@ const Header = (props) => {
                                         Contul meu
                                     </ResponsiveNavLink>
                                     <ResponsiveNavLink
+                                        href="/orders"
+                                        as="button"
+                                    >
+                                        Comenzile mele
+                                    </ResponsiveNavLink>
+                                    <ResponsiveNavLink
                                         href="/favorites"
                                         as="button"
                                     >
                                         Favorite
                                     </ResponsiveNavLink>
-
                                     <ResponsiveNavLink
                                         method="post"
                                         href={route("logout")}
@@ -218,41 +221,34 @@ const Header = (props) => {
                                 onMouseEnter={() => setIsOpen(true)}
                                 onMouseLeave={() => setIsOpen(false)}
                             >
-                                {orderItems ? (
-                                    orderItems.length === 0 ? (
-                                        <NavDropdown.Item eventKey="1">
-                                            Nu ai produse in cos.
-                                        </NavDropdown.Item>
-                                    ) : null
-                                ) : (
+                                {orderItems && orderItems.length === 0 && (
                                     <NavDropdown.Item eventKey="1">
                                         Nu ai produse in cos.
                                     </NavDropdown.Item>
                                 )}
 
-                                {orderItems
-                                    ? orderItems
-                                          .slice(0, 3)
-                                          .map((item, index) => (
-                                              <NavDropdown.Item
-                                                  eventKey={index}
-                                                  href={item.product.href}
-                                              >
-                                                  <OrderDropdown
-                                                      key={index}
-                                                      imgSrc={
-                                                          "/storage/" +
-                                                          item.product.img_src
-                                                      }
-                                                      price={item.product.price}
-                                                      quantity={item.quantity}
-                                                      name={item.product.title}
-                                                  />
-                                              </NavDropdown.Item>
-                                          ))
-                                    : ""}
+                                {orderItems &&
+                                    orderItems
+                                        .slice(0, 3)
+                                        .map((item, index) => (
+                                            <NavDropdown.Item
+                                                key={index}
+                                                eventKey={index}
+                                                href={item.product.href}
+                                            >
+                                                <OrderDropdown
+                                                    imgSrc={
+                                                        "/storage/" +
+                                                        item.product.img_src
+                                                    }
+                                                    price={item.product.price}
+                                                    quantity={item.quantity}
+                                                    name={item.product.title}
+                                                />
+                                            </NavDropdown.Item>
+                                        ))}
 
-                                {orderItems ? (
+                                {orderItems && (
                                     <div>
                                         {orderItems.length > 3 && (
                                             <NavDropdown.Item disabled>
@@ -278,8 +274,6 @@ const Header = (props) => {
                                             </a>
                                         </NavDropdown.Item>
                                     </div>
-                                ) : (
-                                    ""
                                 )}
                             </NavDropdown>
                         </Col>

@@ -17,6 +17,7 @@ class OrdersController extends Controller
 
         $orders = Order::where('user_id', $user->id)
             ->whereIn('order_status', ['pending', 'shipped', 'arrived'])
+            ->orderBy('created_at', 'desc')
             ->get();
 
         $orderItems = [];

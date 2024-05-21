@@ -11,7 +11,10 @@ class AdminOrdersController extends Controller
 {
     public function index(Request $request)
     {
-        $orders = Order::whereNotNull('shipping_address')->get();
+        $orders = Order::whereNotNull('shipping_address')
+            ->orderByRaw("FIELD(order_status, 'pending', 'shipped', 'arrived')")
+            ->orderByDesc('created_at')
+            ->get();
 
         return Inertia::render('Admin/AdminOrders', ['orders' => $orders]);
     }

@@ -50,7 +50,7 @@ export default function VoucherCard(props) {
                                             {voucher.discount_type ==
                                             "percentage"
                                                 ? "%"
-                                                : ""}
+                                                : " RON"}
                                         </p>
                                         <p>
                                             <span>Tipul Discountului: </span>
