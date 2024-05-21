@@ -16,7 +16,7 @@ class OrdersController extends Controller
         $user = Auth::user();
 
         $orders = Order::where('user_id', $user->id)
-            ->whereIn('order_status', ['pending', 'delivered'])
+            ->whereIn('order_status', ['pending', 'shipped', 'arrived'])
             ->get();
 
         $orderItems = [];

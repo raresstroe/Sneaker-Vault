@@ -176,11 +176,11 @@ class CategoryController extends Controller
 
             if ($order) {
                 $orderItems = $order->items()->with('product')->get();
-            }
-            if ($order->total_discounted_price) {
-                $total = $order->total_discounted_price;
-            } else {
-                $total = $order->total_price;
+                if ($order->total_discounted_price) {
+                    $total = $order->total_discounted_price;
+                } else {
+                    $total = $order->total_price;
+                }
             }
         }
 

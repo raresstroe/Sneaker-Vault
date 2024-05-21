@@ -853,7 +853,7 @@ ul.content-text {
     flex-direction: column;
     width: 25%;
     max-width: 25%;
-    max-height: 400px;
+    max-height: 700px;
     border: 1px solid #000;
     border-radius: 5%;
 }

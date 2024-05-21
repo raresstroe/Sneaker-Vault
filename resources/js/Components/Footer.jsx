@@ -99,10 +99,7 @@ const Footer = () => {
                             </h5>
                             <ul className="list-unstyled mb-0">
                                 <li>
-                                    <Link
-                                        className="text-body"
-                                        href="/dashboard"
-                                    >
+                                    <Link className="text-body" href="/profile">
                                         <p className="footer-link">
                                             Contul meu
                                         </p>

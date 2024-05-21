@@ -8,7 +8,6 @@ export default function Dashboard({ auth, orders, orderItems }) {
         const options = { year: "numeric", month: "long", day: "numeric" };
         return date.toLocaleDateString("ro-RO", options);
     };
-
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -68,11 +67,11 @@ export default function Dashboard({ auth, orders, orderItems }) {
                                     </h4>
                                     <h4 className="text-2xl font-semibold">
                                         Status:{" "}
-                                        {order.order_status === "pending"
+                                        {order.order_status == "pending"
                                             ? "In asteptare"
-                                            : order.order_status === "shipped"
-                                            ? "In curs de livrare"
-                                            : "Livrat"}
+                                            : order.order_status == "arrived"
+                                            ? "Livrat"
+                                            : "In curs de livrare"}
                                     </h4>
                                 </div>
                             </div>

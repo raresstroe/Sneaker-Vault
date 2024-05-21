@@ -91,7 +91,7 @@ Route::prefix('cart/checkout')->middleware(['auth'])->group(function () {
 //Checkout Summary
 Route::prefix('cart/summary')->middleware(['auth'])->group(function () {
     Route::get('/', [SummaryController::class, 'index'])->name('summary');
-    Route::post('/send', [SummaryController::class, 'send']);
+    Route::put('/send', [SummaryController::class, 'send']);
 });
 
 
