@@ -313,7 +313,7 @@
                                                       border-collapse: collapse;
                                                     "
                                                   >
-                                                    Numărul de comandă
+                                                    Numărul comenzii
                                                     <br />#{{$id}}
                                                   </td>
                                                 </tr>
