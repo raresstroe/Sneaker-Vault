@@ -63,7 +63,7 @@ export default function Cart({ orderItems, total, bestseller, order }) {
                     </p>
                     {order && order.total_discounted_price ? (
                         <p className="cart-summary-item">
-                            Voucher: -{" "}
+                            Voucher: {order.voucher ? "-" : ""}{" "}
                             {order.total_price - order.total_discounted_price}{" "}
                             RON
                         </p>

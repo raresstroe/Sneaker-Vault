@@ -22,10 +22,12 @@ export default function Summary({ order, orderItems, total }) {
     const postalCode = shippingAddress[4];
     const phone = shippingAddress[5];
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!isSubmitting) {
             setIsSubmitting(true);
-            Inertia.put("/cart/summary/send");
+            if (Inertia.put("/cart/summary/send")) {
+                Inertia.visit("/thank-you");
+            }
         }
     };
     return (
@@ -105,8 +107,18 @@ export default function Summary({ order, orderItems, total }) {
                 <button
                     className="btn btn-dark summary-send-button"
                     onClick={handleSubmit}
+                    disabled={isSubmitting}
                 >
-                    <p className="summary-button-text">Trimite Comanda</p>
+                    {isSubmitting ? (
+                        <div
+                            className="spinner-border text-light"
+                            role="status"
+                        >
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    ) : (
+                        <p className="summary-button-text">Trimite Comanda</p>
+                    )}
                 </button>
             </div>
             <Footer></Footer>

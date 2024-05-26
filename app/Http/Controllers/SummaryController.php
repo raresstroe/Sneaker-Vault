@@ -48,7 +48,7 @@ class SummaryController extends Controller
         $order = Order::where('user_id', $user->id)
             ->where('order_status', 'open')
             ->first();
-        Log::info("total" . $order->total_discounted_price);
+        // Log::info("total" . $order->total_discounted_price);
         if ($order->total_discounted_price < 450 || $order->total_price < 450) {
             $order->total_price += 20;
             $order->total_discounted_price += 20;
