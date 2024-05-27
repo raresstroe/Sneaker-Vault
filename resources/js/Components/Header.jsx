@@ -265,13 +265,10 @@ const Header = (props) => {
                                                 </h6>
                                             </div>
                                         </NavDropdown.Item>
-                                        <NavDropdown.Item>
-                                            <a
-                                                href="/cart"
-                                                className="btn btn-dark dropdown-go-cart"
-                                            >
+                                        <NavDropdown.Item href="/cart">
+                                            <p className="btn btn-dark">
                                                 Mergi la cosul de cumparaturi
-                                            </a>
+                                            </p>
                                         </NavDropdown.Item>
                                     </div>
                                 )}

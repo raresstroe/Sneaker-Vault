@@ -18,18 +18,30 @@ export default function GridPictures({ pictures_array }) {
     };
 
     return (
-        <div className="pictures-container">
-            {pictures.map((pic, index) => (
+        <div
+            className={`pictures-container ${
+                pictures.length === 1 ? "single-picture-container" : ""
+            }`}
+        >
+            {pictures.length === 1 ? (
                 <img
-                    key={index}
-                    src={"/storage/" + pic}
+                    src={"/storage/" + pictures[0]}
                     alt="product"
-                    onClick={() => handlePick(index)}
-                    className={`product-picture product-picture${index + 1} ${
-                        pickedItem === index ? "picked" : ""
-                    }`}
+                    className="single-product-picture"
                 />
-            ))}
+            ) : (
+                pictures.map((pic, index) => (
+                    <img
+                        key={index}
+                        src={"/storage/" + pic}
+                        alt="product"
+                        onClick={() => handlePick(index)}
+                        className={`product-picture product-picture${
+                            index + 1
+                        } ${pickedItem === index ? "picked" : ""}`}
+                    />
+                ))
+            )}
         </div>
     );
 }
