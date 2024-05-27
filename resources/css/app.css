@@ -1277,6 +1277,10 @@ ul.content-text {
     }
     .cart-items-right.summary {
         width: 45%;
+        align-items: flex-end;
+    }
+    p.cart-price.summary {
+        align-self: flex-end;
     }
 }
 
