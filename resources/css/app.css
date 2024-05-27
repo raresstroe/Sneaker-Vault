@@ -1105,6 +1105,49 @@ ul.content-text {
     font-weight: bold;
 }
 
+.checkout-button-next {
+    text-wrap: nowrap;
+    font-size: 1.2rem !important;
+}
+
+@media (max-width: 1000px) {
+    .checkout-container {
+        margin: 1% 5%;
+    }
+    .checkout-shipment-container,
+    .checkout-payment-container,
+    .checkout-summary-container {
+        margin-bottom: 1%;
+    }
+    .checkout-shipment-address {
+        margin: 1% 1% 1%;
+    }
+    .checkout-shipment-title,
+    .checkout-payment-title,
+    .checkout-summary-title {
+        font-size: 20px;
+    }
+    .checkout-summary-left p {
+        font-size: 15px;
+    }
+    .checkout-summary-left-text-right {
+        font-size: 15px;
+    }
+    .checkout-summary-left-text {
+        font-size: 15px;
+    }
+    .checkout-total-text {
+        font-size: 15px;
+    }
+
+    .checkout-summary-left {
+        width: 100%;
+    }
+    .checkout-button-next {
+        font-size: 1rem !important;
+    }
+}
+
 /*Summary*/
 .summary-container {
     display: flex;
@@ -1206,7 +1249,7 @@ ul.content-text {
 }
 
 .summary-side-text {
-    text-align: justify;
+    text-align: center;
 }
 .summary-side-text a {
     color: #000;
@@ -1229,6 +1272,9 @@ ul.content-text {
     .cart-items-left.summary {
         width: 45%;
     }
+    .checkout-summary-right {
+        padding-right: 1%;
+    }
     .cart-items-right.summary {
         width: 45%;
     }
@@ -1248,6 +1294,7 @@ ul.content-text {
 
 .favorite-inner-container img {
     width: 150px;
+    height: auto;
 }
 .favorite-inner-container p {
     margin: 0;
@@ -1307,9 +1354,9 @@ ul.content-text {
 }
 
 @media (max-width: 1000px) {
-    .favorite-inner-container img {
+    /* .favorite-inner-container img {
         width: 100px;
-    }
+    } */
     .favorite-left-side {
         width: 70%;
     }
@@ -1384,6 +1431,18 @@ ul.content-text {
     }
     .orders-avalability,
     .orders-size {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 700px) {
+    .orders-item-container h4 {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 500px) {
+    .orders-item-container h4 {
         font-size: 13px;
     }
 }

@@ -49,7 +49,7 @@ export default function Dashboard({ auth, orders, orderItems }) {
                             </div>
 
                             <div className="p-6 text-gray-900 flex justify-between">
-                                <div>
+                                <div className="orders-item-container">
                                     <h4 className="text-2xl font-semibold">
                                         Data: {formatDate(order.created_at)}
                                     </h4>
@@ -57,7 +57,7 @@ export default function Dashboard({ auth, orders, orderItems }) {
                                         Numar de referinta: #{order.id}
                                     </h4>
                                 </div>
-                                <div>
+                                <div className="orders-item-container">
                                     <h4 className="text-2xl font-semibold">
                                         Total:{" "}
                                         {order.total_discounted_price

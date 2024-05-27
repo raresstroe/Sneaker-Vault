@@ -74,16 +74,17 @@ export default function Summary({ order, orderItems, total }) {
             <div className="summary-cart-cont">
                 <div className="summary-cart-container">
                     {orderItems.map((item, index) => (
-                        <div>
+                        <div key={item.id || index}>
                             <ItemCartSummary
-                                key={index}
                                 name={item.product.title}
                                 price={`${item.product.price} RON`}
                                 size={item.size}
                                 image={"/storage/" + item.product.img_src}
                                 quantity={item.quantity}
                             />
-                            {index !== orderItems.length - 1 && <hr />}
+                            {index !== orderItems.length - 1 && (
+                                <hr key={`hr-${item.id || index}`} />
+                            )}
                         </div>
                     ))}
                 </div>

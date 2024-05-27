@@ -38,7 +38,9 @@ export default function FavoriteComponent(props) {
                     <p className="favorite-avalability">
                         {props.avalability == 1 ? "In Stoc" : "Indisponibil"}
                     </p>
-                    <p className="favorite-size">Marime: {props.size}</p>
+                    <p className="favorite-size">
+                        {props.size == 0 ? "" : "Marime: " + props.size}
+                    </p>
                 </div>
                 <div className="favorite-right-side">
                     <p className="favorite-price">{props.price} RON</p>

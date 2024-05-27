@@ -26,7 +26,7 @@ export default function Favorite({ orderItems, total, favorites, bestseller }) {
                     key={index}
                     id={favorite.id}
                     productId={favorite.product.id}
-                    name={favorite.product.name}
+                    name={favorite.product.title}
                     price={favorite.product.price}
                     size={favorite.size}
                     image={"/storage/" + favorite.product.img_src}

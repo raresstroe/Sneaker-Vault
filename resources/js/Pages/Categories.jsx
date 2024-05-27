@@ -17,7 +17,7 @@ const Categories = ({ title, category, array, brands, orderItems, total }) => {
 
     const { auth } = usePage().props;
     const { loggedIn, name, profile, admin } = useAuth(auth);
-    console.log(array);
+    // console.log(array);
     const arrayAsArray = Object.values(array);
 
     useEffect(() => {

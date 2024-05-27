@@ -393,7 +393,7 @@ export default function Checkout(props) {
                                 RON
                             </p>
                             <button
-                                className="btn btn-dark cart-button"
+                                className="btn btn-dark cart-button checkout-button-next"
                                 onClick={() => handleSubmit()}
                             >
                                 Pasul urmator
