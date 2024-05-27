@@ -37,11 +37,11 @@ export default function AdminDashboard({
                 </Content>
                 <Content>
                     <h3>Numar comenzi lunare</h3>
-                    <p className="text-dashboard-admin">{total_orders}</p>
+                    <p className="text-dashboard-admin">{monthly_orders}</p>
                 </Content>
                 <Content>
                     <h3>Numar comenzi totale</h3>
-                    <p className="text-dashboard-admin">{monthly_orders}</p>
+                    <p className="text-dashboard-admin">{total_orders}</p>
                 </Content>
                 <Content>
                     <h3>Numar clienti lunari</h3>
