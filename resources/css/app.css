@@ -1456,6 +1456,10 @@ ul.content-text {
     margin: auto;
 }
 
+.icon-black {
+    color: black;
+}
+
 .navbar-logo-admin img {
     width: 50px;
     margin-left: 20%;

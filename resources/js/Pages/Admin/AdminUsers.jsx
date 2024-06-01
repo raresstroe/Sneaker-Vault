@@ -24,7 +24,7 @@ export default function AdminUsers({ users }) {
     );
 
     return (
-        <AdminHeader title="Utilizatori">
+        <AdminHeader title="Utilizatori" isUsersPage="true">
             <input
                 type="text"
                 placeholder="Caută utilizator..."

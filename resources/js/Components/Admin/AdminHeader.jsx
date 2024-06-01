@@ -100,7 +100,16 @@ const Drawer = styled(MuiDrawer, {
     }),
 }));
 
-export default function AdminHeader({ children, title }) {
+export default function AdminHeader({
+    children,
+    title,
+    isHomePage = false,
+    isOrdersPage = false,
+    isProductsPage = false,
+    isBannersPage = false,
+    isUsersPage = false,
+    isVoucherPage = false,
+}) {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
 
@@ -179,11 +188,29 @@ export default function AdminHeader({ children, title }) {
                                         }}
                                     >
                                         {item.text === "Acasa" ? (
-                                            <HomeIcon className="admin-header-icon" />
+                                            <HomeIcon
+                                                className={`admin-header-icon ${
+                                                    isHomePage
+                                                        ? "icon-black"
+                                                        : ""
+                                                }`}
+                                            />
                                         ) : item.text === "Banner" ? (
-                                            <ViewCarouselIcon className="admin-header-icon" />
+                                            <ViewCarouselIcon
+                                                className={`admin-header-icon ${
+                                                    isBannersPage
+                                                        ? "icon-black"
+                                                        : ""
+                                                }`}
+                                            />
                                         ) : (
-                                            <InventoryIcon className="admin-header-icon" />
+                                            <InventoryIcon
+                                                className={`admin-header-icon ${
+                                                    isProductsPage
+                                                        ? "icon-black"
+                                                        : ""
+                                                }`}
+                                            />
                                         )}
                                     </ListItemIcon>
                                     <ListItemText
@@ -225,11 +252,29 @@ export default function AdminHeader({ children, title }) {
                                         }}
                                     >
                                         {item.text === "Utilizatori" ? (
-                                            <PersonIcon className="admin-header-icon" />
+                                            <PersonIcon
+                                                className={`admin-header-icon ${
+                                                    isUsersPage
+                                                        ? "icon-black"
+                                                        : ""
+                                                }`}
+                                            />
                                         ) : item.text === "Comenzi" ? (
-                                            <LocalShippingIcon className="admin-header-icon" />
+                                            <LocalShippingIcon
+                                                className={`admin-header-icon ${
+                                                    isOrdersPage
+                                                        ? "icon-black"
+                                                        : ""
+                                                }`}
+                                            />
                                         ) : (
-                                            <LocalActivityIcon className="admin-header-icon" />
+                                            <LocalActivityIcon
+                                                className={`admin-header-icon ${
+                                                    isVoucherPage
+                                                        ? "icon-black"
+                                                        : ""
+                                                }`}
+                                            />
                                         )}
                                     </ListItemIcon>
                                     <ListItemText

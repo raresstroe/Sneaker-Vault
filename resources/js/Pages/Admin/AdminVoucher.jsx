@@ -26,7 +26,7 @@ export default function AdminVoucher({ vouchers }) {
     });
 
     return (
-        <AdminHeader title="Voucher">
+        <AdminHeader title="Voucher" isVoucherPage="true">
             <input
                 type="text"
                 placeholder="Caută voucher..."

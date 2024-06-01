@@ -28,7 +28,7 @@ export default function AdminOrders({ orders }) {
     });
 
     return (
-        <AdminHeader title="Comenzi">
+        <AdminHeader title="Comenzi" isOrdersPage="true">
             <input
                 type="text"
                 placeholder="Caută numar de referinta..."

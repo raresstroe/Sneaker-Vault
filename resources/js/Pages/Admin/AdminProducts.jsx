@@ -24,7 +24,7 @@ export default function AdminProducts({
     };
 
     return (
-        <AdminHeader title="Produse">
+        <AdminHeader title="Produse" isProductsPage="true">
             <div className="head-admin-wrapper">
                 <button
                     className="btn btn-dark checkout-button"

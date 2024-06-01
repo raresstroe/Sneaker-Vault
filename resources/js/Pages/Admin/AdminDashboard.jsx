@@ -15,7 +15,7 @@ export default function AdminDashboard({
 }) {
     return (
         <div>
-            <AdminHeader title="Acasa">
+            <AdminHeader title="Acasa" isHomePage="true">
                 <Content>
                     <h3>Incasari Lunare</h3>
                     <p className="text-dashboard-admin">

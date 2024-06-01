@@ -16,7 +16,7 @@ export default function AdminBanners({ filter_text, banners }) {
     const handleShow = () => setShow(true);
     // console.log(banners);
     return (
-        <AdminHeader title="Slider">
+        <AdminHeader title="Slider" isBannersPage="true">
             <div className="banner-buttin-filter-wrapper">
                 <Button
                     variant="dark"
