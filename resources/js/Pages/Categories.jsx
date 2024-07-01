@@ -1,23 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../Components/Header";
 import CardCategories from "../Components/CardCategories";
 import Footer from "../Components/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSliders } from "@fortawesome/free-solid-svg-icons";
 import { Offcanvas } from "react-bootstrap";
-import { useState, useEffect } from "react";
 import { usePage } from "@inertiajs/react";
 import { useAuth } from "@/Components/includes/useAuth";
 import { Inertia } from "@inertiajs/inertia";
+import Pagination from "react-bootstrap/Pagination";
 
-const Categories = ({ title, category, array, brands, orderItems, total }) => {
+const Categories = ({
+    title,
+    category,
+    array,
+    brands,
+    orderItems,
+    total,
+    pagination,
+}) => {
     const [selectedFilters, setSelectedFilters] = useState([]);
     const [selectedSort, setSelectedSort] = useState("");
     const [selectedType, setSelectedType] = useState("");
 
     const { auth } = usePage().props;
     const { loggedIn, name, profile, admin } = useAuth(auth);
-    // console.log(array);
     const arrayAsArray = Object.values(array);
 
     useEffect(() => {
@@ -68,6 +75,32 @@ const Categories = ({ title, category, array, brands, orderItems, total }) => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const handlePageChange = (page) => {
+        const filters = selectedFilters.join(",");
+        const query = `?filter=${filters}&sort=${selectedSort}&type=${selectedType}&page=${page}`;
+
+        Inertia.visit(`/categories/${category}${query}`);
+    };
+
+    const renderPagination = () => {
+        const { current_page, last_page } = pagination;
+
+        let items = [];
+        for (let number = 1; number <= last_page; number++) {
+            items.push(
+                <Pagination.Item
+                    key={number}
+                    active={number === current_page}
+                    onClick={() => handlePageChange(number)}
+                >
+                    {number}
+                </Pagination.Item>
+            );
+        }
+
+        return <Pagination>{items}</Pagination>;
+    };
+
     return (
         <div>
             <Header
@@ -98,7 +131,7 @@ const Categories = ({ title, category, array, brands, orderItems, total }) => {
                     </select>
                 </div>
                 <p className="filters-text" onClick={handleShow}>
-                    Filters &nbsp; <FontAwesomeIcon icon={faSliders} />
+                    Filtre &nbsp; <FontAwesomeIcon icon={faSliders} />
                 </p>
             </div>
             <Offcanvas show={show} onHide={handleClose} placement="end">
@@ -114,116 +147,32 @@ const Categories = ({ title, category, array, brands, orderItems, total }) => {
                         </div>
                         <h4 className="filter-title">Marime</h4>
                         <div className="checkbox-filter-wrapper">
-                            <div>
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        value="40"
-                                        onChange={handleFilterChange}
-                                        checked={selectedFilters.includes("40")}
-                                    />
-                                    &nbsp; 40
-                                </label>
-                            </div>
-                            <div>
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        value="41"
-                                        onChange={handleFilterChange}
-                                        checked={selectedFilters.includes("41")}
-                                    />
-                                    &nbsp; 41
-                                </label>
-                            </div>
-                            <div>
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        value="42"
-                                        onChange={handleFilterChange}
-                                        checked={selectedFilters.includes("42")}
-                                    />
-                                    &nbsp; 42
-                                </label>
-                            </div>
-                            <div>
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        value="43"
-                                        onChange={handleFilterChange}
-                                        checked={selectedFilters.includes("43")}
-                                    />
-                                    &nbsp; 43
-                                </label>
-                            </div>
-                            <div>
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        value="44"
-                                        onChange={handleFilterChange}
-                                        checked={selectedFilters.includes("44")}
-                                    />
-                                    &nbsp; 44
-                                </label>
-                            </div>
-                            <div>
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        value="45"
-                                        onChange={handleFilterChange}
-                                        checked={selectedFilters.includes("45")}
-                                    />
-                                    &nbsp; 45
-                                </label>
-                            </div>
-                            <div>
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        value="46"
-                                        onChange={handleFilterChange}
-                                        checked={selectedFilters.includes("46")}
-                                    />
-                                    &nbsp; 46
-                                </label>
-                            </div>
-                            <div>
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        value="47"
-                                        onChange={handleFilterChange}
-                                        checked={selectedFilters.includes("47")}
-                                    />
-                                    &nbsp; 47
-                                </label>
-                            </div>
-                            <div>
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        value="48"
-                                        onChange={handleFilterChange}
-                                        checked={selectedFilters.includes("48")}
-                                    />
-                                    &nbsp; 48
-                                </label>
-                            </div>
-                            <div>
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        value="49"
-                                        onChange={handleFilterChange}
-                                        checked={selectedFilters.includes("49")}
-                                    />
-                                    &nbsp; 49
-                                </label>
-                            </div>
+                            {[
+                                "40",
+                                "41",
+                                "42",
+                                "43",
+                                "44",
+                                "45",
+                                "46",
+                                "47",
+                                "48",
+                                "49",
+                            ].map((size) => (
+                                <div key={size}>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            value={size}
+                                            onChange={handleFilterChange}
+                                            checked={selectedFilters.includes(
+                                                size
+                                            )}
+                                        />
+                                        &nbsp; {size}
+                                    </label>
+                                </div>
+                            ))}
                         </div>
                         <h4 className="filter-title">Branduri</h4>
                         <div className="checkbox-filter-wrapper">
@@ -286,7 +235,7 @@ const Categories = ({ title, category, array, brands, orderItems, total }) => {
                     ))}
                 </div>
             </div>
-
+            <div className="pagination-container">{renderPagination()}</div>
             <Footer />
         </div>
     );

@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "@inertiajs/react";
 
-const CardCategories = ({ imgSrc, title, label, price, href, category }) => {
+const CardCategories = ({ imgSrc, title, label, price, href }) => {
     return (
         <>
             <div className="cards-link">

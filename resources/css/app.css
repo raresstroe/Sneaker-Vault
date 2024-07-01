@@ -163,6 +163,32 @@ p.btn.btn-dark {
     user-select: none;
 }
 
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2%;
+}
+
+.page-item .page-link {
+    background-color: black;
+    border: none;
+    color: white;
+    user-select: none;
+}
+
+.page-item.active .page-link {
+    background-color: black;
+    border: none;
+    color: white;
+}
+
+.page-item .page-link:hover {
+    background-color: #333;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
 @media (max-width: 991px) {
     .profile-pic {
         width: 40px;
@@ -361,8 +387,8 @@ p.btn.btn-dark {
 }
 
 .label-cards-categories {
-    position: absolute;
-    bottom: 60px;
+    position: relative;
+    bottom: 40px;
     left: 10px;
     background-color: #fff;
     color: #000;
@@ -382,7 +408,6 @@ p.btn.btn-dark {
 .cards-link {
     position: relative;
     text-decoration: none;
-    /* width: calc(30% - 20px); */
     margin: 10px;
 }
 
@@ -464,6 +489,7 @@ p.btn.btn-dark {
 .filters-text {
     text-align: right;
     margin-right: 6%;
+    margin-bottom: 0;
 }
 .filters-text:hover {
     cursor: pointer;
@@ -480,6 +506,17 @@ p.btn.btn-dark {
     padding-right: 10%;
     padding-left: 60%;
     margin-bottom: 0px;
+}
+
+@media (max-width: 768px) {
+    .sort-by {
+        padding-left: 20%;
+        font-size: 15px;
+    }
+    .container-sort-by select {
+        padding: 0.4rem 0.4rem;
+        font-size: 15px;
+    }
 }
 
 /*Toggle Content*/

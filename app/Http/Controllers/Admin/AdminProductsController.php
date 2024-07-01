@@ -106,18 +106,15 @@ class AdminProductsController extends Controller
 
             $validatedData = $validator->validated();
 
-            $linkNameBase = strtolower(str_replace(' ', '-', $validatedData['title']));
-            $linkName = $linkNameBase;
-            $suffix = 1;
-
-            while (Product::where('link_name', $linkName)->exists()) {
-                $linkName = $linkNameBase . '-' . $suffix++;
-            }
-
-            $validatedData['link_name'] = $linkName;
-            $validatedData['href'] = "/products/{$linkName}";
-
+            // Create the product
             $product = Product::create($validatedData);
+
+            // Update link_name and href with the product id
+            $linkName = strtolower(str_replace(' ', '-', $validatedData['title'])) . '-' . $product->id;
+            $product->update([
+                'link_name' => $linkName,
+                'href' => "/products/{$linkName}",
+            ]);
 
             foreach ($temporaryImages as $tmp_image) {
                 Storage::copy('public/products/tmp/' . $tmp_image->folder . '/' . $tmp_image->file, 'public/images/products/' . $product->id . '/' . $tmp_image->file);
@@ -136,6 +133,7 @@ class AdminProductsController extends Controller
                 $product->img_src = $path;
                 $product->save();
             }
+
             $filter = $request->session()->get('filter');
             if ($filter) {
                 return redirect()->route('products.index', ['filter' => $filter])->with('success', 'Bannerul a fost creat cu succes.');

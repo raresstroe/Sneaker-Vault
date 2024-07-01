@@ -56,6 +56,8 @@ class CategoryController extends Controller
             default:
         }
 
+
+
         $filter = $request->query('filter');
 
         if ($filter) {
@@ -93,7 +95,6 @@ class CategoryController extends Controller
 
 
         // Log::info($products->toSql());
-        $products = $products->paginate(25);
 
         $orderItems = [];
         $total = 0;
@@ -138,6 +139,8 @@ class CategoryController extends Controller
                     break;
             }
         }
+        
+        $products = $products->paginate(24);
 
         return Inertia::render('Categories', [
             'title' => 'Incaltaminte ' . $categoryName,
@@ -156,6 +159,14 @@ class CategoryController extends Controller
             'filters' => $filters,
             'orderItems' => $orderItems,
             'total' => $total,
+            'pagination' => [
+                'total' => $products->total(),
+                'per_page' => $products->perPage(),
+                'current_page' => $products->currentPage(),
+                'last_page' => $products->lastPage(),
+                'from' => $products->firstItem(),
+                'to' => $products->lastItem()
+            ],
         ]);
     }
 
