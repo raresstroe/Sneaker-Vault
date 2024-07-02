@@ -2,6 +2,7 @@ import React from "react";
 import Header from "@/Components/Header";
 import { Link, usePage } from "@inertiajs/react";
 import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import Card from "@/Components/Card";
@@ -21,6 +22,15 @@ export default function Product({
     const { auth } = usePage().props;
     const { loggedIn, name, profile, admin } = useAuth(auth);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+
+    const openModal = () => {
+        setShowModal(true);
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+    };
 
     const category = array[0].category;
     const categoryMap = {
@@ -137,8 +147,22 @@ export default function Product({
                         </div>
                     )}
                     {array[0].size && (
-                        <Link className="size-table">Tabel de masuri</Link>
+                        <p className="size-table" onClick={openModal}>
+                            Tabel de masuri
+                        </p>
                     )}
+
+                    <Modal show={showModal} onHide={closeModal} centered>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Tabel de masuri</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <img
+                                src="../images/size-table.png"
+                                alt="size-chart"
+                            />
+                        </Modal.Body>
+                    </Modal>
                     <div className="add-to-cart-container">
                         <Button
                             variant="dark"
@@ -175,14 +199,16 @@ export default function Product({
                 ))}
             </ProductSlider>
             <div className="product-content-container">
-                <span
-                    className={`product-content-item ${
-                        activeItem === 0 ? "active" : ""
-                    }`}
-                    onClick={() => handleClick(0)}
-                >
-                    Descriere
-                </span>
+                {array[0].long_description && (
+                    <span
+                        className={`product-content-item ${
+                            activeItem === 0 ? "active" : ""
+                        }`}
+                        onClick={() => handleClick(0)}
+                    >
+                        Descriere
+                    </span>
+                )}
                 {/* <span
                     className={`product-content-item ${
                         activeItem === 1 ? "active" : ""

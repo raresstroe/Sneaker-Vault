@@ -148,6 +148,10 @@ const Categories = ({
                         <h4 className="filter-title">Marime</h4>
                         <div className="checkbox-filter-wrapper">
                             {[
+                                "30",
+                                "31",
+                                "32",
+                                "33",
                                 "40",
                                 "41",
                                 "42",

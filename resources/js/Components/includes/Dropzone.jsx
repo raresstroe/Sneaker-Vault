@@ -21,6 +21,7 @@ export default function Dropzone(props) {
                 "image/jpg",
                 "image/jpeg",
                 "image/gif",
+                "image/mp4",
             ]}
             maxFileSize="20MB"
             maxParallelUploads={3}

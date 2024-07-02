@@ -3,7 +3,7 @@ import { Container, Row, Col, Button, Form, ListGroup } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faFacebookF,
-    faXTwitter,
+    faGithub,
     faInstagram,
 } from "@fortawesome/free-brands-svg-icons";
 import { Link } from "@inertiajs/react";
@@ -27,21 +27,21 @@ const Footer = () => {
                     <Button
                         variant="outline"
                         className="btn-floating m-1"
-                        href="#!"
+                        href="https://web.facebook.com/rares.stroe"
                     >
                         <FontAwesomeIcon icon={faFacebookF} />
                     </Button>
                     <Button
                         variant="outline"
                         className="btn-floating m-1"
-                        href="#!"
+                        href="https://github.com/raresstroe"
                     >
-                        <FontAwesomeIcon icon={faXTwitter} />
+                        <FontAwesomeIcon icon={faGithub} />
                     </Button>
                     <Button
                         variant="outline"
                         className="btn-floating m-1"
-                        href="#!"
+                        href="https://www.instagram.com/rares_stroe/"
                     >
                         <FontAwesomeIcon icon={faInstagram} />
                     </Button>

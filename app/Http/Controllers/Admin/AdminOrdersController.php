@@ -12,6 +12,7 @@ class AdminOrdersController extends Controller
     public function index(Request $request)
     {
         $orders = Order::whereNotNull('shipping_address')
+            ->where('order_status', '!=', 'open')
             ->orderByRaw("FIELD(order_status, 'pending', 'shipped', 'arrived')")
             ->orderByDesc('created_at')
             ->get();

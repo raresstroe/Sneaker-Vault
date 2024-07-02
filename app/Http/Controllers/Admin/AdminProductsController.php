@@ -74,7 +74,7 @@ class AdminProductsController extends Controller
         try {
             $file = $request->file('img_src');
             Validator::extend('image_extension', function ($attribute, $value, $parameters, $validator) {
-                $allowedExtensions = ['jpeg', 'png', 'jpg', 'gif'];
+                $allowedExtensions = ['jpeg', 'png', 'jpg', 'gif', "mp4"];
                 $extension = strtolower($value->getClientOriginalExtension());
                 return in_array($extension, $allowedExtensions);
             });
@@ -106,10 +106,8 @@ class AdminProductsController extends Controller
 
             $validatedData = $validator->validated();
 
-            // Create the product
             $product = Product::create($validatedData);
 
-            // Update link_name and href with the product id
             $linkName = strtolower(str_replace(' ', '-', $validatedData['title'])) . '-' . $product->id;
             $product->update([
                 'link_name' => $linkName,
@@ -151,7 +149,7 @@ class AdminProductsController extends Controller
     {
         try {
             Validator::extend('image_extension', function ($attribute, $value, $parameters, $validator) {
-                $allowedExtensions = ['jpeg', 'png', 'jpg', 'gif'];
+                $allowedExtensions = ['jpeg', 'png', 'jpg', 'gif', 'mp4'];
                 if ($value instanceof UploadedFile) {
                     $extension = strtolower($value->getClientOriginalExtension());
                     return in_array($extension, $allowedExtensions);

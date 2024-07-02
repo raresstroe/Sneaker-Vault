@@ -31,7 +31,10 @@ class AdminBannersController extends Controller
             default:
         }
 
-        $banners = $banners->orderBy('id', 'desc')->get();
+        $banners = Banner::orderByDesc('is_active')
+            ->orderBy('id', 'desc')
+            ->get();
+
         $filter_text = match ($filter) {
             'active' => 'Bannere active',
             'not-active' => 'Bannere inactive',

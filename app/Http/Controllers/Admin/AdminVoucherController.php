@@ -18,7 +18,7 @@ class AdminVoucherController extends Controller
 {
     public function index(Request $request)
     {
-        $vouchers = Voucher::all();
+        $vouchers = Voucher::orderByDesc('is_active')->get();
 
         return Inertia::render('Admin/AdminVoucher', [
             'vouchers' => $vouchers

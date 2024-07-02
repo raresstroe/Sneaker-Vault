@@ -689,7 +689,13 @@ ul.content-text {
 .size-table {
     margin-left: 5%;
     color: #000;
+    font-weight: 600;
+    margin-bottom: 0;
     cursor: pointer;
+    text-decoration: underline;
+}
+.size-table:hover {
+    color: #4b4a4a;
 }
 
 .add-to-cart-container {

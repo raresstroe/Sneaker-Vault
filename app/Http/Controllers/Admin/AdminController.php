@@ -15,18 +15,19 @@ class AdminController extends Controller
     {
         $user = Auth::user();
         $orders = Order::whereNotNull('shipping_address')->get();
-        $monthly_revenue = $orders->where('created_at', '>=', now()->subMonth())
+        $monthly_revenue = $orders->where('updated_at', '>=', now()->subMonth())
             ->sum(function ($order) {
                 return $order->total_discounted_price ?? $order->total_price;
             });
+
 
         $total_revenue = $orders->sum(function ($order) {
             return $order->total_discounted_price ?? $order->total_price;
         });
         $total_orders = $orders->count();
-        $monthly_orders = $orders->where('created_at', '>=', now()->subMonth())->count();
+        $monthly_orders = $orders->where('updated_at', '>=', now()->subMonth())->count();
         $total_customers = $orders->groupBy('user_id')->count();
-        $monthly_customers = $orders->where('created_at', '>=', now()->subMonth())->groupBy('user_id')->count();
+        $monthly_customers = $orders->where('updated_at', '>=', now()->subMonth())->groupBy('user_id')->count();
 
         $county_counts = [];
         $city_counts = [];
