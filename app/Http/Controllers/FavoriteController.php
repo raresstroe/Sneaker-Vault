@@ -40,7 +40,7 @@ class FavoriteController extends Controller
 
         $favorites = Favorite::where('user_id', $user->id)->with('product')->get();
 
-        $bestseller = Product::where('is_active', 1)->where('is_bestseller', 1)->get();
+        $bestseller = Product::where('is_active', 1)->where('is_bestseller', 1)->inRandomOrder()->get();
 
         return Inertia::render('Favorite', [
             'favorites' => $favorites,

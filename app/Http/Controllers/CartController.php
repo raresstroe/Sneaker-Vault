@@ -29,7 +29,7 @@ class CartController extends Controller
         $orderItems = [];
         $total = 0;
 
-        $bestseller = Product::where('is_active', 1)->where('is_bestseller', 1)->get();
+        $bestseller = Product::where('is_active', 1)->where('is_bestseller', 1)->inRandomOrder()->get();
 
         if ($order) {
             $orderItems = $order->items()->with('product')->get();
